@@ -4,12 +4,11 @@ import Container from '@mui/material/Container'
 import Typography from '@mui/material/Typography'
 
 export default function Footer() {
-
   return (
-    <Box component="footer" sx={{ bgcolor: 'background.paper', py: 6 }}>
+    <Box component="footer" sx={{  backgroundColor: '#4F4CEE', p: '37px', mt: 4 }}>
       <Container maxWidth="lg">
-				<Typography variant="body2" color="text.secondary" align="right">
-					© {new Date().getFullYear()} Haus incorporated
+				<Typography variant="body1" color="white" align="right">
+					© {new Date().getFullYear()} Haus Team
 				</Typography>
       </Container>
     </Box>
