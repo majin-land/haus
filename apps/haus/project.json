@@ -1,0 +1,47 @@
+{
+  "name": "haus",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/haus",
+  "projectType": "application",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@nx/next:build",
+      "outputs": [
+        "{options.outputPath}"
+      ],
+      "defaultConfiguration": "production",
+      "options": {
+        "outputPath": "dist/haus"
+      },
+      "configurations": {
+        "development": {
+          "outputPath": "apps/haus",
+          "turbo": true
+        },
+        "production": {}
+      }
+    },
+    "serve": {
+      "executor": "@nx/next:server",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "haus:build",
+        "port": 5000
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "haus:build:development",
+          "verbose": true,
+          "dev": true,
+          "turbo": true,
+          "hostname": "0.0.0.0"
+        },
+        "production": {
+          "buildTarget": "haus:build:production",
+          "dev": false
+        }
+      }
+    }
+  }
+}
