@@ -37,7 +37,6 @@ export default function Home() {
   return (
     <>
       <Hero />
-      <Login />
       <Container
         maxWidth="lg"
       > 

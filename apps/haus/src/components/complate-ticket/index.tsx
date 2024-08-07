@@ -1,5 +1,6 @@
 import React from 'react'
-import { Box, Typography, Button, Grid } from '@mui/material'
+import Link from 'next/link'
+import { Box, Typography, Grid } from '@mui/material'
 import EmailIcon from '@mui/icons-material/Email'
 import PhoneIcon from '@mui/icons-material/Phone'
 
@@ -30,18 +31,8 @@ const ComplateTicket: React.FC = () => {
       <img src="/success.png" alt="Completed Illustration" style={{ marginBottom: '24px' }} />
       
       <Typography variant="h6" component="p" gutterBottom>
-        Tickets have been sent to
+        Check your ticket <Link href="#">here</Link>
       </Typography>
-      <Typography variant="h6" component="p" color="primary" gutterBottom>
-        rachelgreen@gmail.com
-      </Typography>
-      
-      <Typography variant="body1" component="p" gutterBottom>
-        Haven’t received tickets yet?
-      </Typography>
-      <Button variant="outlined" color="primary" style={{ marginBottom: '24px' }}>
-        Resend Tickets
-      </Button>
       
       <Typography variant="body1" component="p" gutterBottom>
         Having trouble receiving the tickets?
