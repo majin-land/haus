@@ -22,19 +22,18 @@ const Login = () => {
     console.log('onError', error)
   }
 
-  const handleVerify = async (proof: ISuccessResult) => {
-    const res = await fetch("/api/verify", { // route to your backend will depend on implementation
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify(proof),
-    })
-    if (!res.ok) {
-        throw new Error("Verification failed."); // IDKit will display the error message to the user in the modal
+  const handleVerify = async (result: ISuccessResult) => {
+    console.log(
+      "Proof received from IDKit, sending to backend:\n",
+      JSON.stringify(result)
+    ); // Log the proof from IDKit to the console for visibility
+    const data = await verify(result);
+    if (data.success) {
+      console.log("Successful response from backend:\n", JSON.stringify(data)); // Log the response from our backend for visibility
+    } else {
+      throw new Error(`Verification failed: ${data.detail}`);
     }
-  };
-  console.log(app_id, action, 'ffffffffff')
+  }
 
   return (
     <div className="flex flex-col items-center justify-center h-screen">
