@@ -1,6 +1,8 @@
 "use client"
 import React from 'react'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
+import LocationOnIcon from '@mui/icons-material/LocationOn'
+import EventIcon from '@mui/icons-material/Event'
 
 import Container from '@mui/material/Container'
 import { Box, Button, Card, CardContent, Divider, Grid, IconButton, MenuItem, Select, SelectChangeEvent, Stack, Typography } from '@mui/material'
@@ -24,12 +26,18 @@ const EventDetails = () => {
           <Typography variant="h6">
             Drive In Senja: Back to the Future
           </Typography>
-          <Typography variant="body1">
-            September 22, 2021   ·   20.00 - 21.56 WIB
-          </Typography>
-          <Typography variant="body1">
-            Parkiran Utama Mall @ Alam Sutera
-          </Typography>
+          <Stack direction="row" gap={1} alignItems="center">
+            <LocationOnIcon fontSize="small" />
+            <Typography variant="body1" component="span">
+              Parkiran Utama Mall @ Alam Sutera
+            </Typography>
+          </Stack>
+          <Stack direction="row" gap={1} alignItems="center">
+            <EventIcon fontSize="small" />
+            <Typography variant="body1" component="span">
+              September 22, 2021 &middot; 20.00 - 21.56 WIB
+            </Typography>
+          </Stack>
           <Typography variant="body1">
             Marty travels back in time using an eccentric scientist is time machine. However, he must make his high-school-aged parents fall in love in order to return to the present.
           </Typography>

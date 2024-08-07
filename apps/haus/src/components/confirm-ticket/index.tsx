@@ -3,6 +3,8 @@ import { Alert, Box, Button, Container, Divider, IconButton, Stack, TextField, T
 import React from 'react'
 import { useRouter } from 'next/navigation'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
+import LocationOnIcon from '@mui/icons-material/LocationOn'
+import EventIcon from '@mui/icons-material/Event'
 
 function ConfirmTicket() {
   const router = useRouter()
@@ -58,7 +60,7 @@ function ConfirmTicket() {
             <Stack direction="row" justifyContent="flex-end">
               <Button
                 sx={{ width: 120 }}
-                onClick={() => console.log('press')}
+                onClick={() => router.push(`/event/1/complate`)}
                 variant="contained"
                 size="large"
               > 
@@ -71,16 +73,22 @@ function ConfirmTicket() {
               Event Details
             </Typography>
             <Stack gap={2}>
-              <Stack direction="column">
+              <Stack direction="column" gap={1}>
                 <Typography variant="body1">
                   Drive In Senja: Back to the Future
                 </Typography>
-                <Typography variant="body1">
-                  Parkiran Utama Mall @ Alam Sutera
-                </Typography>
-                <Typography variant="body1">
-                  September 22, 2021 · 20.00 - 21.56 WIB
-                </Typography>
+                <Stack direction="row" gap={1} alignItems="center">
+                  <LocationOnIcon fontSize="small" />
+                  <Typography variant="body1" component="span">
+                    Parkiran Utama Mall @ Alam Sutera
+                  </Typography>
+                </Stack>
+                <Stack direction="row" gap={1} alignItems="center">
+                  <EventIcon fontSize="small" />
+                  <Typography variant="body1" component="span">
+                    September 22, 2021 &middot; 20.00 - 21.56 WIB
+                  </Typography>
+                </Stack>
               </Stack>
               <Divider />
               <Typography variant="h6">
