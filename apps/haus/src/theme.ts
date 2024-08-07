@@ -10,7 +10,11 @@ const roboto = Roboto({
 
 const theme = createTheme({
   palette: {
-    mode: 'light',
+    primary: {
+      light: '#7F7DF3',
+      main: '#4F4CEE',
+      dark: '#231FEA',
+    },
   },
   typography: {
     fontFamily: roboto.style.fontFamily,
@@ -25,6 +29,13 @@ const theme = createTheme({
         }),
       },
     },
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          textTransform: 'none',
+        },
+      },
+    }
   },
 })
 

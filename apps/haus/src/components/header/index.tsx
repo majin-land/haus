@@ -27,10 +27,10 @@ export default function Header() {
           Haus
         </Typography>
         <Stack gap={2} direction="row" alignItems="center">
-          <Button variant="outlined" size="small">
+          <Button variant="outlined" size="medium">
             Login
           </Button>
-          <Button variant="contained" size="small">
+          <Button variant="contained" size="medium">
             Sign up
           </Button>
         </Stack>
