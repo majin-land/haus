@@ -6,7 +6,9 @@ import Grid from '@mui/material/Grid'
 import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
 import CardMedia from '@mui/material/CardMedia'
-import { Button, CardActions, Box } from '@mui/material'
+import Box from '@mui/material/Box'
+import Button from '@mui/material/Button'
+import CardActions from '@mui/material/CardActions'
 import { useRouter } from 'next/navigation'
 
 interface FeaturedPostProps {

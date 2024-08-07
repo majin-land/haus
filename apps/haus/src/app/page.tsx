@@ -8,6 +8,8 @@ import Event from '@/components/event'
 import Footer from '@/components/footer'
 import { Box } from '@mui/material'
 
+import Login from "./_components/login";
+
 const events = [
   {
     title: 'Featured post',
@@ -35,6 +37,7 @@ export default function Home() {
   return (
     <>
       <Hero />
+      <Login />
       <Container
         maxWidth="lg"
       > 
