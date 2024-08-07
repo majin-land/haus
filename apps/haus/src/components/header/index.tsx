@@ -3,7 +3,9 @@ import Toolbar from '@mui/material/Toolbar'
 import Typography from '@mui/material/Typography'
 import Container from '@mui/material/Container'
 import { Stack } from '@mui/material'
+
 import Login from '../login'
+import Account from '../account'
 
 export default function Header() {
 
@@ -28,6 +30,7 @@ export default function Header() {
         </Typography>
         <Stack gap={2} direction="row" alignItems="center">
           <Login />
+          <Account />
         </Stack>
       </Container>
     </Toolbar>
