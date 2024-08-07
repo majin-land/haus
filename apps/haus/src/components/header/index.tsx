@@ -1,9 +1,9 @@
 import * as React from 'react'
 import Toolbar from '@mui/material/Toolbar'
-import Button from '@mui/material/Button'
 import Typography from '@mui/material/Typography'
 import Container from '@mui/material/Container'
 import { Stack } from '@mui/material'
+import Login from '../login'
 
 export default function Header() {
 
@@ -27,12 +27,7 @@ export default function Header() {
           Haus
         </Typography>
         <Stack gap={2} direction="row" alignItems="center">
-          <Button variant="outlined" size="medium">
-            Login
-          </Button>
-          <Button variant="contained" size="medium">
-            Sign up
-          </Button>
+          <Login />
         </Stack>
       </Container>
     </Toolbar>

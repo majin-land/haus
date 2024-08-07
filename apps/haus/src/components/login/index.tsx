@@ -44,7 +44,7 @@ const Login = () => {
         onSuccess={onSuccess} // callback when the modal is closed
         handleVerify={handleVerify} // callback when the proof is received
         onError={onError}
-        verification_level={VerificationLevel.Orb}
+        verification_level={VerificationLevel.Device}
     >
         {({ open }) => 
             // This is the button that will open the IDKit modal
