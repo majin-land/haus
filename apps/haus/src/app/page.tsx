@@ -3,6 +3,7 @@ import Hero from '@/components/hero'
 import Grid from '@mui/material/Grid'
 import Event from '@/components/event'
 import { Container, Typography } from '@mui/material';
+import Login from "./_components/login";
 
 const events = [
   {
