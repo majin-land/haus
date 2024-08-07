@@ -3,8 +3,8 @@ import { IDKitWidget, VerificationLevel, ISuccessResult, IErrorState } from '@wo
 import { verify } from "./actions/verify";
 
 
-const app_id = process.env.NEXT_PUBLIC_WLD_APP_ID as `app_${string}`;
-const action = process.env.NEXT_PUBLIC_WLD_ACTION;
+const app_id = process.env.NEXT_PUBLIC_WORLDID_CLIENT_ID as `app_${string}`;
+const action = process.env.NEXT_PUBLIC_WORLDID_ACTION;
 
 const Login = () => {
   if (!app_id) {
@@ -43,7 +43,7 @@ const Login = () => {
         onSuccess={onSuccess} // callback when the modal is closed
         handleVerify={handleVerify} // callback when the proof is received
         onError={onError}
-        verification_level={VerificationLevel.Device}
+        verification_level={VerificationLevel.Orb}
     >
         {({ open }) => 
             // This is the button that will open the IDKit modal

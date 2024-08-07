@@ -20,8 +20,8 @@ interface IVerifyRequest {
   signal?: string;
 }
 
-const app_id = process.env.NEXT_PUBLIC_WLD_APP_ID as `app_${string}`;
-const action = process.env.NEXT_PUBLIC_WLD_ACTION as string;
+const app_id = process.env.NEXT_PUBLIC_WORLDID_CLIENT_ID as `app_${string}`;
+const action = process.env.NEXT_PUBLIC_WORLDID_ACTION as string;
 
 export async function verify(
   proof: IVerifyRequest["proof"],
