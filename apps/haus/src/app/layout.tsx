@@ -6,6 +6,7 @@ import CssBaseline from '@mui/material/CssBaseline'
 
 import theme from '@/theme'
 import Header from '@/components/header'
+import { TicketProvider } from '@/store/ticket'
 
 export const metadata: Metadata = {
   title: 'Haus',
@@ -19,8 +20,10 @@ export default function RootLayout(props: { children: React.ReactNode }) {
           <ThemeProvider theme={theme}>
             {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
             <CssBaseline />
-            <Header />
-            {props.children}
+            <TicketProvider>
+              <Header />
+              {props.children}
+            </TicketProvider>
           </ThemeProvider>
         </AppRouterCacheProvider>
       </body>

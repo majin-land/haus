@@ -1,5 +1,5 @@
 "use client"
-import React from 'react'
+import React, { useContext } from 'react'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 import LocationOnIcon from '@mui/icons-material/LocationOn'
 import EventIcon from '@mui/icons-material/Event'
@@ -8,6 +8,7 @@ import Container from '@mui/material/Container'
 import { Box, Button, Card, CardContent, Divider, Grid, IconButton, MenuItem, Select, SelectChangeEvent, Stack, Typography } from '@mui/material'
 import { useParams, useRouter } from 'next/navigation'
 import { getEventById, IEvent, Ticket } from '@/utils/helper'
+import { TicketContext } from '@/store/ticket'
 
 const EventDetails = ({ event }: { event: IEvent | undefined }) => {
   const router = useRouter()
@@ -49,9 +50,11 @@ const EventDetails = ({ event }: { event: IEvent | undefined }) => {
 }
 
 const TypeTicket = ({ ticket }: { ticket: Ticket }) => {
+  const context = useContext(TicketContext)
   const [seat, setSeat] = React.useState('')
 
   const handleChange = (event: SelectChangeEvent) => {
+    context?.addSelectedTicket(ticket.type, Number(event.target.value))
     setSeat(event.target.value)
   }
 
@@ -88,7 +91,7 @@ const TypeTicket = ({ ticket }: { ticket: Ticket }) => {
   )
 }
 
-const Footer = () => {
+const Footer = ({ totalPrice }: { totalPrice: number }) => {
   const { id } = useParams<{ id: string }>()
   const router = useRouter()
 
@@ -102,7 +105,7 @@ const Footer = () => {
         <Stack direction="row" justifyContent="space-between" alignItems="center">
           <Stack direction="row" alignItems="center" gap={6}>
             <Typography variant="subtitle1" color="white">Total Price :</Typography>
-            <Typography variant="h6" color="white">$100</Typography>
+            <Typography variant="h6" color="white">{totalPrice} ETH</Typography>
           </Stack>
           <Button onClick={handleClick} variant="contained" size="large">
             Buy Tickets
@@ -116,6 +119,7 @@ const Footer = () => {
 function TicketOptions() {
   const { id } = useParams<{ id: string }>()
   const event = getEventById(id)
+  const context = useContext(TicketContext)
 
   return (
     <Box style={{ display: 'flex', flexDirection: 'column', height: 'calc(100vh - 64px)' }}>
@@ -130,7 +134,7 @@ function TicketOptions() {
           ))}
         </Grid>
       </Container>
-      <Footer />
+      <Footer totalPrice={context?.calculateTotalPrice(event?.tickets || []) || 0} />
     </Box>
   )
 }

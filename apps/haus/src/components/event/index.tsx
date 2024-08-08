@@ -30,12 +30,6 @@ export default function Event(props: EventProps) {
   return (
     <Grid item md={3}>
       <Card sx={{ minWidth: 285 }}>
-        <CardMedia
-          component="img"
-          height="140"
-          image={event.image_url}
-          alt={event.name}
-        />
         <CardContent>
           <Stack spacing={1}>
             <Typography variant="h6">
