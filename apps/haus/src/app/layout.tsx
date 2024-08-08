@@ -1,4 +1,5 @@
 import * as React from 'react'
+import type { Metadata } from 'next'
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v14-appRouter'
 import { ThemeProvider } from '@mui/material/styles'
 import CssBaseline from '@mui/material/CssBaseline'
@@ -8,7 +9,10 @@ import BaseProvider from '@/components/provider/base'
 
 import theme from '@/theme'
 import Header from '@/components/header'
-import Footer from '@/components/footer'
+
+export const metadata: Metadata = {
+  title: 'Haus',
+}
 
 const BASE_KEY = process.env.NEXT_PUBLIC_ONCHAINKIT_API_KEY || ''
 
@@ -23,7 +27,6 @@ export default function RootLayout(props: { children: React.ReactNode }) {
                 <CssBaseline />
                 <Header />
                 {props.children}
-                <Footer />
               </BaseProvider>
             </ThemeProvider>
           </AppRouterCacheProvider>
