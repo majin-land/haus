@@ -15,14 +15,15 @@ import {
     EthBalance,
   } from '@coinbase/onchainkit/identity';
   import { color } from '@coinbase/onchainkit/theme';
+import { Box } from '@mui/material';
    
 
   const WalletComponents = () => {
     return (
-      <div className="flex justify-end">
+      <Box sx={{ width: '100%', display: 'flex', justifyContent: 'flex-end' }}> 
         <Wallet>
           <ConnectWallet>
-            <Avatar className="h-6 w-6" />
+            <Avatar />
             <Name />
           </ConnectWallet>
           <WalletDropdown>
@@ -38,7 +39,7 @@ import {
             <WalletDropdownDisconnect />
           </WalletDropdown>
         </Wallet>
-      </div>
+      </Box>
     );
   }
 
