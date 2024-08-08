@@ -1,3 +1,5 @@
+'use client'
+
 import { 
     ConnectWallet, 
     Wallet, 
@@ -14,7 +16,8 @@ import {
   } from '@coinbase/onchainkit/identity';
   import { color } from '@coinbase/onchainkit/theme';
    
-  export function WalletComponents() {
+
+  const WalletComponents = () => {
     return (
       <div className="flex justify-end">
         <Wallet>
@@ -38,3 +41,5 @@ import {
       </div>
     );
   }
+
+  export default WalletComponents

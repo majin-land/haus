@@ -3,10 +3,10 @@
 import { base } from 'viem/chains'
 
 import { OnchainKitProvider } from '@coinbase/onchainkit'
-// import '@coinbase/onchainkit/styles.css'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'; 
 import { WagmiProvider } from 'wagmi'; 
 import { wagmiConfig } from './wagmi'; 
+import '@coinbase/onchainkit/styles.css'
 
 const queryClient = new QueryClient(); 
 
