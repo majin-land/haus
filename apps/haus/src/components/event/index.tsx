@@ -6,28 +6,25 @@ import Grid from '@mui/material/Grid'
 import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
 import CardMedia from '@mui/material/CardMedia'
-import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import CardActions from '@mui/material/CardActions'
 import { useRouter } from 'next/navigation'
+import { Stack } from '@mui/material'
 
-interface FeaturedPostProps {
-event: {
-    date: string;
-    image: string;
-    imageLabel: string;
-    title: string;
-    location: string;
-    price: string;
-  }
+import LocationOnIcon from '@mui/icons-material/LocationOn'
+import EventIcon from '@mui/icons-material/Event'
+import { IEvent, formatPriceRange } from '@/utils/helper'
+
+interface EventProps {
+  event: IEvent
 }
 
-export default function Event(props: FeaturedPostProps) {
+export default function Event(props: EventProps) {
   const router = useRouter()
   const { event } = props
 
   const handleClick = () => {
-    router.push(`/event/1`)
+    router.push(`/event/${event.id}`)
   }
 
   return (
@@ -36,33 +33,30 @@ export default function Event(props: FeaturedPostProps) {
         <CardMedia
           component="img"
           height="140"
-          image={event.image}
-          alt={event.imageLabel}
+          image={event.image_url}
+          alt={event.name}
         />
         <CardContent>
-          <Grid container spacing={2}>
-            <Grid item xs={2.5} sx={{ display: 'flex', alignItems: 'center' }}>
-              <Typography
-                variant="subtitle1"
-                textAlign="center"
-              >
-                {event.date}
+          <Stack spacing={1}>
+            <Typography variant="h6">
+              {event.name}
+            </Typography>
+            <Typography variant="body2" component="span">
+              {formatPriceRange(event.tickets)} ETH
+            </Typography>
+            <Stack direction="row" gap={1} alignItems="center">
+              <LocationOnIcon fontSize="small" />
+              <Typography variant="body2" component="span">
+                {event.location}
               </Typography>
-            </Grid>
-            <Grid item xs={9.5}>
-              <Box>
-                <Typography variant="h6">
-                  {event.title}
-                </Typography>
-                <Typography variant="subtitle1">
-                  {event.price}
-                </Typography>
-                <Typography variant="subtitle1">
-                  {event.location}
-                </Typography>
-              </Box>
-            </Grid>
-          </Grid>
+            </Stack>
+            <Stack direction="row" gap={1} alignItems="center">
+              <EventIcon fontSize="small" />
+              <Typography variant="body2" component="span">
+                {event.date} &middot; {event.time}
+              </Typography>
+            </Stack>
+          </Stack>
         </CardContent>
         <CardActions>
           <Button fullWidth size="small" onClick={handleClick}>Get Ticket</Button>

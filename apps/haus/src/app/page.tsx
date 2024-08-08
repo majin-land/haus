@@ -7,28 +7,7 @@ import Hero from '@/components/hero'
 import Event from '@/components/event'
 import Footer from '@/components/footer'
 
-const events = [
-  {
-    title: 'Featured post',
-    date: 'Nov 12',
-    price: '$100 - $200',
-    description:
-      'This is a wider card with supporting text below as a natural lead-in to additional content.',
-    image: 'https://picsum.photos/200/200',
-    imageLabel: 'Image Text',
-    location: 'San Francisco, CA',
-  },
-  {
-    title: 'Post title',
-    date: 'Nov 11',
-    price: '$100 - $200',
-    description:
-      'This is a wider card with supporting text below as a natural lead-in to additional content.',
-    image: 'https://picsum.photos/200/300',
-    imageLabel: 'Image Text',
-    location: 'San Francisco, CA',
-  },
-];
+import { EVENTS } from '@/config'
 
 export default function Home() {
   return (
@@ -41,8 +20,8 @@ export default function Home() {
           Events
         </Typography>
         <Grid container spacing={4}>
-          {events.map((event) => (
-            <Event key={event.title} event={event} />
+          {EVENTS.map((event) => (
+            <Event key={event.id} event={event} />
           ))}
         </Grid>
       </Container>

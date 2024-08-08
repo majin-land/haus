@@ -6,9 +6,10 @@ import EventIcon from '@mui/icons-material/Event'
 
 import Container from '@mui/material/Container'
 import { Box, Button, Card, CardContent, Divider, Grid, IconButton, MenuItem, Select, SelectChangeEvent, Stack, Typography } from '@mui/material'
-import { useRouter } from 'next/navigation'
+import { useParams, useRouter } from 'next/navigation'
+import { getEventById, IEvent, Ticket } from '@/utils/helper'
 
-const EventDetails = () => {
+const EventDetails = ({ event }: { event: IEvent | undefined }) => {
   const router = useRouter()
 
   return (
@@ -24,22 +25,22 @@ const EventDetails = () => {
       <Stack spacing={1}>
         <Stack spacing={1}>
           <Typography variant="h6">
-            Drive In Senja: Back to the Future
+            {event?.name}
           </Typography>
           <Stack direction="row" gap={1} alignItems="center">
             <LocationOnIcon fontSize="small" />
             <Typography variant="body1" component="span">
-              Parkiran Utama Mall @ Alam Sutera
+              {event?.location}
             </Typography>
           </Stack>
           <Stack direction="row" gap={1} alignItems="center">
             <EventIcon fontSize="small" />
             <Typography variant="body1" component="span">
-              September 22, 2021 &middot; 20.00 - 21.56 WIB
+              {event?.date} &middot; {event?.time}
             </Typography>
           </Stack>
           <Typography variant="body1">
-            Marty travels back in time using an eccentric scientist is time machine. However, he must make his high-school-aged parents fall in love in order to return to the present.
+            {event?.description}
           </Typography>
         </Stack>
       </Stack>
@@ -47,7 +48,7 @@ const EventDetails = () => {
   )
 }
 
-const TypeTicket = () => {
+const TypeTicket = ({ ticket }: { ticket: Ticket }) => {
   const [seat, setSeat] = React.useState('')
 
   const handleChange = (event: SelectChangeEvent) => {
@@ -61,10 +62,10 @@ const TypeTicket = () => {
           <Stack direction="row" justifyContent="space-between" alignItems="center" gap={3}>
             <Stack>
               <Typography variant="h6">
-                General
+                {ticket.type}
               </Typography>
               <Typography variant="body1">
-                $100
+                {ticket.price} ETH
               </Typography>
             </Stack>
             <Select
@@ -77,6 +78,8 @@ const TypeTicket = () => {
               <MenuItem value={1}>1</MenuItem>
               <MenuItem value={2}>2</MenuItem>
               <MenuItem value={3}>3</MenuItem>
+              <MenuItem value={4}>4</MenuItem>
+              <MenuItem value={5}>5</MenuItem>
             </Select>
           </Stack>
         </CardContent>
@@ -86,10 +89,11 @@ const TypeTicket = () => {
 }
 
 const Footer = () => {
+  const { id } = useParams<{ id: string }>()
   const router = useRouter()
 
   const handleClick = () => {
-    router.push(`/event/1/confirm`)
+    router.push(`/event/${id}/confirm`)
   }
 
   return (
@@ -110,15 +114,20 @@ const Footer = () => {
 }
 
 function TicketOptions() {
+  const { id } = useParams<{ id: string }>()
+  const event = getEventById(id)
+
   return (
     <Box style={{ display: 'flex', flexDirection: 'column', height: 'calc(100vh - 64px)' }}>
       <Container
         maxWidth="lg"
       > 
-        <EventDetails />
+        <EventDetails event={event} />
         <Divider />
         <Grid pt={4} container spacing={4}>
-          <TypeTicket />
+          {event?.tickets.map((ticket) => (
+            <TypeTicket key={ticket.type} ticket={ticket} />
+          ))}
         </Grid>
       </Container>
       <Footer />
