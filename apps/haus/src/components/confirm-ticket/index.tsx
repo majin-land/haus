@@ -8,7 +8,7 @@ import EventIcon from '@mui/icons-material/Event'
 import { getEventById } from '@/utils/helper'
 import { TicketContext } from '@/store/ticket'
 
-function ConfirmTicket() {
+function ConfirmTicket({ setStep }: { setStep: (step: number) => void }) {
   const { id } = useParams<{ id: string }>()
   const event = getEventById(id)
   const router = useRouter()
@@ -20,7 +20,7 @@ function ConfirmTicket() {
         maxWidth="lg"
       > 
         <Stack direction="row" alignItems="center" gap={2} mb={2}>
-          <IconButton onClick={() => router.back()}>
+          <IconButton onClick={() => setStep(0)}>
             <ArrowBackIcon />
           </IconButton>
           <Typography variant="h5">

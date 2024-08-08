@@ -91,12 +91,10 @@ const TypeTicket = ({ ticket }: { ticket: Ticket }) => {
   )
 }
 
-const Footer = ({ totalPrice }: { totalPrice: number }) => {
-  const { id } = useParams<{ id: string }>()
-  const router = useRouter()
+const Footer = ({ totalPrice, setStep }: { totalPrice: number, setStep: (step: number) => void }) => {
 
   const handleClick = () => {
-    router.push(`/event/${id}/confirm`)
+    setStep(1)
   }
 
   return (
@@ -107,7 +105,12 @@ const Footer = ({ totalPrice }: { totalPrice: number }) => {
             <Typography variant="subtitle1" color="white">Total Price :</Typography>
             <Typography variant="h6" color="white">{totalPrice} ETH</Typography>
           </Stack>
-          <Button onClick={handleClick} variant="contained" size="large">
+          <Button
+            onClick={handleClick}
+            variant="contained"
+            size="large"
+            disabled={totalPrice === 0}
+          >
             Buy Tickets
           </Button>
         </Stack>
@@ -116,7 +119,7 @@ const Footer = ({ totalPrice }: { totalPrice: number }) => {
   )
 }
 
-function TicketOptions() {
+function TicketOptions({ setStep }: { setStep: (step: number) => void }) {
   const { id } = useParams<{ id: string }>()
   const event = getEventById(id)
   const context = useContext(TicketContext)
@@ -134,7 +137,10 @@ function TicketOptions() {
           ))}
         </Grid>
       </Container>
-      <Footer totalPrice={context?.calculateTotalPrice(event?.tickets || []) || 0} />
+      <Footer
+        setStep={setStep}
+        totalPrice={context?.calculateTotalPrice(event?.tickets || []) || 0}
+      />
     </Box>
   )
 }

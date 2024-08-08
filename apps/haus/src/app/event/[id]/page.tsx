@@ -1,7 +1,7 @@
 import * as React from 'react'
 
-import TicketOptions from '@/components/ticket-options'
+import BookingEvent from '@/components/booking-event'
 
-export default function EventPage() {
-  return <TicketOptions />
+export default function BookingEventPage() {
+  return <BookingEvent />
 }
