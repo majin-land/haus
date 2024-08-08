@@ -6,9 +6,6 @@ import Typography from '@mui/material/Typography'
 import Hero from '@/components/hero'
 import Event from '@/components/event'
 import Footer from '@/components/footer'
-import { Box } from '@mui/material'
-
-import Login from "./_components/login";
 
 const events = [
   {
