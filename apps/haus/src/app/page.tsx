@@ -1,9 +1,11 @@
 import * as React from 'react'
-import Hero from '@/components/hero'
 import Grid from '@mui/material/Grid'
+import Container from '@mui/material/Container'
+import Typography from '@mui/material/Typography'
+
+import Hero from '@/components/hero'
 import Event from '@/components/event'
-import { Container, Typography } from '@mui/material';
-import Login from "./_components/login";
+import Footer from '@/components/footer'
 
 const events = [
   {
@@ -44,6 +46,7 @@ export default function Home() {
           ))}
         </Grid>
       </Container>
+      <Footer />
     </>
   )
 }
