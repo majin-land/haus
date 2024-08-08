@@ -1,16 +1,18 @@
 "use client"
 import { Box, Button, Container, Divider, IconButton, Stack, Typography } from '@mui/material'
-import React from 'react'
+import React, { useContext } from 'react'
 import { useParams, useRouter } from 'next/navigation'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 import LocationOnIcon from '@mui/icons-material/LocationOn'
 import EventIcon from '@mui/icons-material/Event'
 import { getEventById } from '@/utils/helper'
+import { TicketContext } from '@/store/ticket'
 
 function ConfirmTicket() {
   const { id } = useParams<{ id: string }>()
   const event = getEventById(id)
   const router = useRouter()
+  const context = useContext(TicketContext)
 
   return (
     <Box py={4} style={{ display: 'flex', flexDirection: 'column', height: 'calc(100vh - 64px)' }}>
@@ -48,37 +50,30 @@ function ConfirmTicket() {
               </Stack>
             </Stack>
             <Divider />
-            <Stack direction="row" justifyContent="space-between" alignItems="center">
-              <Typography variant="body1">
-                Ticket Type
-              </Typography>
-              <Typography variant="body1">
-                2 x General
-              </Typography>
-            </Stack>
-            <Divider />
-            <Stack direction="row" justifyContent="space-between" alignItems="center">
-              <Typography variant="body1">
-                Ticket Price
-              </Typography>
-              <Typography variant="body1">
-                2 x $200
-              </Typography>
-            </Stack>
+            {context?.selectedTickets.map((ticket) => (
+              <Stack direction="row" justifyContent="space-between" alignItems="center" key={ticket.type}>
+                <Typography variant="body1">
+                  Ticket
+                </Typography>
+                <Typography variant="body1">
+                  {ticket.quantity} x {ticket.price} ({ticket.type})
+                </Typography>
+              </Stack>
+            ))}
             <Divider />
             <Stack direction="row" justifyContent="space-between" alignItems="center">
               <Typography variant="body1">
                 Total
               </Typography>
               <Typography variant="body1">
-                $400
+                {context?.calculateTotalPrice(event?.tickets || [])} ETH
               </Typography>
             </Stack>
           </Stack>
           <Stack direction="row" justifyContent="flex-end">
             <Button
               sx={{ width: 120 }}
-              onClick={() => router.push(`/event/1/complate`)}
+              onClick={() => router.push(`/event/${id}/complate`)}
               variant="contained"
               size="large"
             > 

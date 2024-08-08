@@ -5,11 +5,12 @@ import React, { createContext, useState, ReactNode } from 'react'
 interface SelectedTicket {
   type: string
   quantity: number
+  price: number
 }
 
 interface TicketContextType {
   selectedTickets: SelectedTicket[]
-  addSelectedTicket: (type: string, quantity: number) => void
+  addSelectedTicket: (type: string, quantity: number, price: number) => void
   calculateTotalPrice: (tickets: Ticket[]) => number
 }
 
@@ -18,7 +19,7 @@ const TicketContext = createContext<TicketContextType | undefined>(undefined)
 const TicketProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [selectedTickets, setSelectedTickets] = useState<SelectedTicket[]>([])
 
-  const addSelectedTicket = (type: string, quantity: number) => {
+  const addSelectedTicket = (type: string, quantity: number, price: number) => {
     setSelectedTickets(prev => {
       const existing = prev.find(ticket => ticket.type === type)
       if (existing) {
@@ -26,7 +27,7 @@ const TicketProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
           ticket.type === type ? { ...ticket, quantity } : ticket
         )
       } else {
-        return [...prev, { type, quantity }]
+        return [...prev, { type, quantity, price }]
       }
     })
   }

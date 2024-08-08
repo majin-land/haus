@@ -54,7 +54,7 @@ const TypeTicket = ({ ticket }: { ticket: Ticket }) => {
   const [seat, setSeat] = React.useState('')
 
   const handleChange = (event: SelectChangeEvent) => {
-    context?.addSelectedTicket(ticket.type, Number(event.target.value))
+    context?.addSelectedTicket(ticket.type, Number(event.target.value), ticket.price)
     setSeat(event.target.value)
   }
 
