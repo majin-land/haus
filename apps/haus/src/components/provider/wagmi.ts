@@ -1,19 +1,19 @@
 import { http, createConfig } from 'wagmi'
-import { baseSepolia } from 'wagmi/chains'
+import { optimismSepolia } from 'wagmi/chains'
 import { coinbaseWallet } from 'wagmi/connectors'
 
 export const wagmiConfig = createConfig({
-  chains: [baseSepolia],
+  chains: [optimismSepolia],
   multiInjectedProviderDiscovery: false,
   connectors: [
     coinbaseWallet({
-      appName: 'yourAppName',
+      appName: 'Haus',
       preference: 'smartWalletOnly', // set this to `all` to use EOAs as well
       version: '4',
     }),
   ],
   ssr: true,
   transports: {
-    [baseSepolia.id]: http(),
+    [optimismSepolia.id]: http(),
   },
 })

@@ -1,6 +1,6 @@
 'use client'
 
-import { baseSepolia } from 'viem/chains'
+import { optimismSepolia } from 'viem/chains'
 
 import { OnchainKitProvider } from '@coinbase/onchainkit'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
@@ -15,7 +15,7 @@ const BaseProvider = ({ apiKey, children }: { apiKey: string; children: React.Re
       <QueryClientProvider client={queryClient}>
         <OnchainKitProvider
           apiKey={apiKey}
-          chain={baseSepolia}
+          chain={optimismSepolia}
         >
           {children}
         </OnchainKitProvider>
