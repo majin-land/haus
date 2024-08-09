@@ -6,7 +6,7 @@ const roboto = Roboto({
   weight: ['300', '400', '500', '700'],
   subsets: ['latin'],
   display: 'swap',
-});
+})
 
 const theme = createTheme({
   palette: {
@@ -35,7 +35,7 @@ const theme = createTheme({
           textTransform: 'none',
         },
       },
-    }
+    },
   },
 })
 

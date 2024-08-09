@@ -1,4 +1,4 @@
-"use client"
+'use client'
 import * as React from 'react'
 import Avatar from '@mui/material/Avatar'
 import Menu from '@mui/material/Menu'
@@ -13,7 +13,7 @@ import { useRouter } from 'next/navigation'
 export default function Account() {
   const router = useRouter()
 
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
   const open = Boolean(anchorEl)
 
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -77,12 +77,8 @@ export default function Account() {
         transformOrigin={{ horizontal: 'right', vertical: 'top' }}
         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
       >
-        <MenuItem onClick={handleClose}>
-          Profile
-        </MenuItem>
-        <MenuItem onClick={handleTicket}>
-          My Ticket
-        </MenuItem>
+        <MenuItem onClick={handleClose}>Profile</MenuItem>
+        <MenuItem onClick={handleTicket}>My Ticket</MenuItem>
         <Divider />
         <MenuItem onClick={handleClose}>
           <ListItemIcon>

@@ -2,7 +2,12 @@
   "name": "@haus/source",
   "version": "0.0.0",
   "license": "MIT",
-  "scripts": {},
+  "scripts": {
+    "lint": "nx run-many -t lint",
+    "lint:fix": "nx run-many -t lint --fix",
+    "reset": "nx reset",
+    "serve": "nx run-many -t serve"
+  },
   "private": true,
   "dependencies": {
     "@coinbase/onchainkit": "^0.28.5",

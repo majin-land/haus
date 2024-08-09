@@ -5,11 +5,18 @@ import Typography from '@mui/material/Typography'
 
 export default function Footer() {
   return (
-    <Box component="footer" sx={{  backgroundColor: '#4F4CEE', p: '37px', mt: 4 }}>
+    <Box
+      component="footer"
+      sx={{ backgroundColor: '#4F4CEE', p: '37px', mt: 4 }}
+    >
       <Container maxWidth="lg">
-				<Typography variant="body1" color="white" align="right">
-					© {new Date().getFullYear()} Haus Team
-				</Typography>
+        <Typography
+          variant="body1"
+          color="white"
+          align="right"
+        >
+          © {new Date().getFullYear()} Haus Team
+        </Typography>
       </Container>
     </Box>
   )

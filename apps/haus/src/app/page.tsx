@@ -13,15 +13,22 @@ export default function Home() {
   return (
     <>
       <Hero />
-      <Container
-        maxWidth="lg"
-      > 
-        <Typography variant="h4" mb={2}>
+      <Container maxWidth="lg">
+        <Typography
+          variant="h4"
+          mb={2}
+        >
           Events
         </Typography>
-        <Grid container spacing={4}>
+        <Grid
+          container
+          spacing={4}
+        >
           {EVENTS.map((event) => (
-            <Event key={event.id} event={event} />
+            <Event
+              key={event.id}
+              event={event}
+            />
           ))}
         </Grid>
       </Container>

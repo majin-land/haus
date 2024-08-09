@@ -9,7 +9,6 @@ import Wallet from '../wallet'
 import Account from '../account'
 
 export default function Header() {
-
   return (
     <Toolbar sx={{ borderBottom: 1, borderColor: 'divider' }}>
       <Container
@@ -19,7 +18,7 @@ export default function Header() {
           alignItems: 'center',
           justifyContent: 'space-between',
         }}
-      > 
+      >
         <Typography
           component="h2"
           variant="h5"
@@ -29,7 +28,11 @@ export default function Header() {
         >
           Haus
         </Typography>
-        <Stack gap={2} direction="row" alignItems="center">
+        <Stack
+          gap={2}
+          direction="row"
+          alignItems="center"
+        >
           <Wallet />
           <Login />
           <Account />

@@ -1,11 +1,10 @@
-"use client"
+'use client'
 
 import * as React from 'react'
 import Typography from '@mui/material/Typography'
 import Grid from '@mui/material/Grid'
 import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
-import CardMedia from '@mui/material/CardMedia'
 import Button from '@mui/material/Button'
 import CardActions from '@mui/material/CardActions'
 import { useRouter } from 'next/navigation'
@@ -28,32 +27,56 @@ export default function Event(props: EventProps) {
   }
 
   return (
-    <Grid item md={3}>
+    <Grid
+      item
+      md={3}
+    >
       <Card sx={{ minWidth: 285 }}>
         <CardContent>
           <Stack spacing={1}>
-            <Typography variant="h6">
-              {event.name}
-            </Typography>
-            <Typography variant="body2" component="span">
+            <Typography variant="h6">{event.name}</Typography>
+            <Typography
+              variant="body2"
+              component="span"
+            >
               {formatPriceRange(event.tickets)} ETH
             </Typography>
-            <Stack direction="row" gap={1} alignItems="center">
+            <Stack
+              direction="row"
+              gap={1}
+              alignItems="center"
+            >
               <LocationOnIcon fontSize="small" />
-              <Typography variant="body2" component="span">
+              <Typography
+                variant="body2"
+                component="span"
+              >
                 {event.location}
               </Typography>
             </Stack>
-            <Stack direction="row" gap={1} alignItems="center">
+            <Stack
+              direction="row"
+              gap={1}
+              alignItems="center"
+            >
               <EventIcon fontSize="small" />
-              <Typography variant="body2" component="span">
+              <Typography
+                variant="body2"
+                component="span"
+              >
                 {event.date} &middot; {event.time}
               </Typography>
             </Stack>
           </Stack>
         </CardContent>
         <CardActions>
-          <Button fullWidth size="small" onClick={handleClick}>Get Ticket</Button>
+          <Button
+            fullWidth
+            size="small"
+            onClick={handleClick}
+          >
+            Get Ticket
+          </Button>
         </CardActions>
       </Card>
     </Grid>

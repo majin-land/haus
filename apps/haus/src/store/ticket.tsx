@@ -1,4 +1,4 @@
-"use client"
+'use client'
 import { Ticket } from '@/utils/helper'
 import React, { createContext, useState, ReactNode } from 'react'
 
@@ -14,18 +14,16 @@ interface TicketContextType {
   calculateTotalPrice: (tickets: Ticket[]) => number
 }
 
-const TicketContext = createContext<TicketContextType | undefined>(undefined)   
+const TicketContext = createContext<TicketContextType | undefined>(undefined)
 
 const TicketProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [selectedTickets, setSelectedTickets] = useState<SelectedTicket[]>([])
 
   const addSelectedTicket = (type: string, quantity: number, price: number) => {
-    setSelectedTickets(prev => {
-      const existing = prev.find(ticket => ticket.type === type)
+    setSelectedTickets((prev) => {
+      const existing = prev.find((ticket) => ticket.type === type)
       if (existing) {
-        return prev.map(ticket =>
-          ticket.type === type ? { ...ticket, quantity } : ticket
-        )
+        return prev.map((ticket) => (ticket.type === type ? { ...ticket, quantity } : ticket))
       } else {
         return [...prev, { type, quantity, price }]
       }
@@ -34,7 +32,7 @@ const TicketProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
 
   const calculateTotalPrice = (tickets: Ticket[]): number => {
     const ticketPriceMap = new Map<string, number>()
-    tickets.forEach(ticket => {
+    tickets.forEach((ticket) => {
       ticketPriceMap.set(ticket.type, ticket.price)
     })
 

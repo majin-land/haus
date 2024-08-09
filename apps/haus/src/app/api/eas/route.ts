@@ -5,10 +5,6 @@ import { EAS_ADDRESS, SCHEMA_UID, PROVIDER } from '@/config'
 
 export const PRIVATE_KEY = process.env.WALLET_PRIVATE_KEY
 
-export async function GET(request: Request) {
-  // get attestation detail using attestation id
-}
-
 export async function POST(request: Request) {
   try {
     if (!PRIVATE_KEY || !EAS_ADDRESS) return

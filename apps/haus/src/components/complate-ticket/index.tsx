@@ -23,34 +23,68 @@ const ComplateTicket: React.FC = () => {
         padding="8px 16px"
         marginBottom="24px"
       >
-        <Typography variant="h4" component="h1" color="primary">
+        <Typography
+          variant="h4"
+          component="h1"
+          color="primary"
+        >
           Completed!
         </Typography>
       </Box>
-      
-      <img src="/success.png" alt="Completed Illustration" style={{ marginBottom: '24px' }} />
-      
-      <Typography variant="h6" component="p" gutterBottom>
+
+      <img
+        src="/success.png"
+        alt="Completed Illustration"
+        style={{ marginBottom: '24px' }}
+      />
+
+      <Typography
+        variant="h6"
+        component="p"
+        gutterBottom
+      >
         Check your ticket <Link href="#">here</Link>
       </Typography>
-      
-      <Typography variant="body1" component="p" gutterBottom>
+
+      <Typography
+        variant="body1"
+        component="p"
+        gutterBottom
+      >
         Having trouble receiving the tickets?
       </Typography>
-      
-      <Grid container spacing={2} justifyContent="center">
+
+      <Grid
+        container
+        spacing={2}
+        justifyContent="center"
+      >
         <Grid item>
-          <Box display="flex" alignItems="center">
+          <Box
+            display="flex"
+            alignItems="center"
+          >
             <PhoneIcon color="primary" />
-            <Typography variant="body1" component="span" marginLeft="8px">
+            <Typography
+              variant="body1"
+              component="span"
+              marginLeft="8px"
+            >
               +62 21 1234 9876
             </Typography>
           </Box>
         </Grid>
         <Grid item>
-          <Box display="flex" alignItems="center">
+          <Box
+            display="flex"
+            alignItems="center"
+          >
             <EmailIcon color="primary" />
-            <Typography variant="body1" component="span" marginLeft="8px">
+            <Typography
+              variant="body1"
+              component="span"
+              marginLeft="8px"
+            >
               haus@team.com
             </Typography>
           </Box>
