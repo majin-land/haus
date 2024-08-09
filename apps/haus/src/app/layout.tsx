@@ -9,6 +9,7 @@ import BaseProvider from '@/components/provider/base'
 
 import theme from '@/theme'
 import Header from '@/components/header'
+import { TicketProvider } from '@/store/ticket'
 
 export const metadata: Metadata = {
   title: 'Haus',
@@ -20,16 +21,18 @@ export default function RootLayout(props: { children: React.ReactNode }) {
   return (
     <html lang="en">
       <body>
-          <AppRouterCacheProvider options={{ enableCssLayer: true }}>
-            <ThemeProvider theme={theme}>
-              <BaseProvider apiKey={BASE_KEY}>
-                {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
-                <CssBaseline />
+        <AppRouterCacheProvider options={{ enableCssLayer: true }}>
+          <ThemeProvider theme={theme}>
+            <BaseProvider apiKey={BASE_KEY}>
+              {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
+              <CssBaseline />
+              <TicketProvider>
                 <Header />
                 {props.children}
-              </BaseProvider>
-            </ThemeProvider>
-          </AppRouterCacheProvider>
+              </TicketProvider>
+            </BaseProvider>
+          </ThemeProvider>
+        </AppRouterCacheProvider>
       </body>
     </html>
   )
