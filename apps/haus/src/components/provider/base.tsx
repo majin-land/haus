@@ -1,25 +1,27 @@
 'use client'
 
-import { base } from 'viem/chains'
+import { baseSepolia } from 'viem/chains'
 
 import { OnchainKitProvider } from '@coinbase/onchainkit'
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query'; 
-import { WagmiProvider } from 'wagmi'; 
-import { wagmiConfig } from './wagmi'; 
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { WagmiProvider } from 'wagmi'
+import { wagmiConfig } from './wagmi'
 
-const queryClient = new QueryClient(); 
+const queryClient = new QueryClient()
 
-const BaseProvider = ({ apiKey, children }: { apiKey: string, children: React.ReactNode }) => {
+const BaseProvider = ({ apiKey, children }: { apiKey: string; children: React.ReactNode }) => {
   return (
     <WagmiProvider config={wagmiConfig}>
       <QueryClientProvider client={queryClient}>
-        <OnchainKitProvider apiKey={apiKey} chain={base}>
-        {children}
+        <OnchainKitProvider
+          apiKey={apiKey}
+          chain={baseSepolia}
+        >
+          {children}
         </OnchainKitProvider>
       </QueryClientProvider>
-    </WagmiProvider> 
+    </WagmiProvider>
   )
-
 }
 
 export default BaseProvider
