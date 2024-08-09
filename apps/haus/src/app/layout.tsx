@@ -21,18 +21,18 @@ export default function RootLayout(props: { children: React.ReactNode }) {
   return (
     <html lang="en">
       <body>
-          <AppRouterCacheProvider options={{ enableCssLayer: true }}>
-            <ThemeProvider theme={theme}>
-              <BaseProvider apiKey={BASE_KEY}>
-                {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
-                <CssBaseline />
-                <TicketProvider>
-                  <Header />
-                  {props.children}
-                </TicketProvider>
-              </BaseProvider>
-            </ThemeProvider>
-          </AppRouterCacheProvider>
+        <AppRouterCacheProvider options={{ enableCssLayer: true }}>
+          <ThemeProvider theme={theme}>
+            <BaseProvider apiKey={BASE_KEY}>
+              {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
+              <CssBaseline />
+              <TicketProvider>
+                <Header />
+                {props.children}
+              </TicketProvider>
+            </BaseProvider>
+          </ThemeProvider>
+        </AppRouterCacheProvider>
       </body>
     </html>
   )
