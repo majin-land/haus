@@ -5,6 +5,7 @@ import Container from '@mui/material/Container'
 import { Stack } from '@mui/material'
 
 import Login from '../login'
+import Wallet from '../wallet'
 import Account from '../account'
 
 export default function Header() {
@@ -29,6 +30,7 @@ export default function Header() {
           Haus
         </Typography>
         <Stack gap={2} direction="row" alignItems="center">
+          <Wallet />
           <Login />
           <Account />
         </Stack>
