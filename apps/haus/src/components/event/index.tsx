@@ -9,10 +9,13 @@ import Button from '@mui/material/Button'
 import CardActions from '@mui/material/CardActions'
 import { useRouter } from 'next/navigation'
 import { Stack } from '@mui/material'
+import { useAccount, useConnect } from 'wagmi'
 
 import LocationOnIcon from '@mui/icons-material/LocationOn'
 import EventIcon from '@mui/icons-material/Event'
 import { IEvent, formatPriceRange } from '@/utils/helper'
+
+import { connectorCoinBaseWallet } from '../provider/wagmi'
 
 interface EventProps {
   event: IEvent
@@ -20,10 +23,17 @@ interface EventProps {
 
 export default function Event(props: EventProps) {
   const router = useRouter()
+  const { address } = useAccount()
+  const { connect } = useConnect()
   const { event } = props
 
   const handleClick = () => {
-    router.push(`/event/${event.id}`)
+    if (address) {
+      router.push(`/event/${event.id}`)
+      return
+    }
+
+    connect({ connector: connectorCoinBaseWallet })
   }
 
   return (
@@ -72,7 +82,8 @@ export default function Event(props: EventProps) {
         <CardActions>
           <Button
             fullWidth
-            size="small"
+            size="medium"
+            variant="outlined"
             onClick={handleClick}
           >
             Get Ticket
