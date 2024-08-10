@@ -2,11 +2,9 @@ import * as React from 'react'
 import Toolbar from '@mui/material/Toolbar'
 import Typography from '@mui/material/Typography'
 import Container from '@mui/material/Container'
-import { Stack } from '@mui/material'
+import { Link, Stack } from '@mui/material'
 
-import Login from '../login'
 import Wallet from '../wallet'
-import Account from '../account'
 
 export default function Header() {
   return (
@@ -26,7 +24,12 @@ export default function Header() {
           noWrap
           sx={{ flex: 1 }}
         >
-          Haus
+          <Link
+            href="/"
+            underline="none"
+          >
+            Haus
+          </Link>
         </Typography>
         <Stack
           gap={2}
@@ -34,8 +37,6 @@ export default function Header() {
           alignItems="center"
         >
           <Wallet />
-          <Login />
-          <Account />
         </Stack>
       </Container>
     </Toolbar>
