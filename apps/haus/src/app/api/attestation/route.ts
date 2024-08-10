@@ -6,9 +6,9 @@ import { EAS_ADDRESS, PRIVATE_KEY, SCHEMA_UID, PROVIDER } from '@/config'
 export async function POST(request: Request) {
   try {
     const body = await request.json()
-    const { id, eventId, holderName, type, seatNumber, entryFor, recipient } = body
+    const { id, eventId, worldProof, holderName, type, seatNumber, entryFor, recipient } = body
 
-    if (!id || !eventId || !holderName || !type || !seatNumber || !entryFor || !recipient) {
+    if (!id || !eventId || !worldProof || !holderName || !type || !seatNumber || !entryFor || !recipient) {
       return NextResponse.json({ message: 'All field are required' }, { status: 400 })
     }
     // Initialize the sdk with the address of the EAS Schema contract address
@@ -22,17 +22,16 @@ export async function POST(request: Request) {
     easInstance.connect(signer)
 
     // Initialize SchemaEncoder with the schema string
-    const schemaEncoder = new SchemaEncoder(
-      'string id,string event_id,string holder_name,string type,uint16 seat_number,uint8 entry_for',
-    )
+    const schemaEncoder = new SchemaEncoder("string id,string event_id,string world_proof,string holder_name,string type,string seat_number,uint8 entry_for");
     const encodedData = schemaEncoder.encodeData([
-      { name: 'id', value: id, type: 'string' },
-      { name: 'event_id', value: eventId, type: 'string' },
-      { name: 'holder_name', value: holderName, type: 'string' },
-      { name: 'type', value: type, type: 'string' },
-      { name: 'seat_number', value: seatNumber, type: 'uint16' },
-      { name: 'entry_for', value: entryFor, type: 'uint8' },
-    ])
+      { name: "id", value: id, type: "string" }
+      { name: "event_id", value: eventId, type: "string" }
+      { name: "world_proof", value: worldProof, type: "string" }
+      { name: "holder_name", value: holderName, type: "string" }
+      { name: "type", value: type, type: "string" }
+      { name: "seat_number", value: seatNumber, type: "string" }
+      { name: "entry_for", value: entryFor, type: "uint8" }
+    ]);
     const tx = await easInstance.attest({
       schema: SCHEMA_UID as string,
       data: {
