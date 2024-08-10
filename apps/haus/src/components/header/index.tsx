@@ -4,7 +4,7 @@ import Typography from '@mui/material/Typography'
 import Container from '@mui/material/Container'
 import { Stack } from '@mui/material'
 
-import Login from '../login'
+import Login from '../verify-world-id'
 import Wallet from '../wallet'
 import Account from '../account'
 

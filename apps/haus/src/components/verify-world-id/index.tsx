@@ -6,20 +6,20 @@ import Button from '@mui/material/Button'
 const app_id = process.env.NEXT_PUBLIC_WORLDID_CLIENT_ID as `app_${string}`
 const action = process.env.NEXT_PUBLIC_WORLDID_ACTION
 
-const Login = () => {
+const VerifyWorldId = ({
+  label,
+  onSuccess,
+  onError,
+}: {
+  label: string
+  onSuccess: (result: ISuccessResult) => void
+  onError: (error: IErrorState) => void
+}) => {
   if (!app_id) {
     throw new Error('app_id is not set in environment variables!')
   }
   if (!action) {
     throw new Error('action is not set in environment variables!')
-  }
-
-  const onSuccess = (result: ISuccessResult) => {
-    console.log('onSuccess', result)
-  }
-
-  const onError = (error: IErrorState) => {
-    console.log('onError', error)
   }
 
   const handleVerify = async (result: ISuccessResult) => {
@@ -49,7 +49,7 @@ const Login = () => {
             size="medium"
             onClick={open}
           >
-            Verify with World ID
+            {label}
           </Button>
         )}
       </IDKitWidget>
@@ -57,4 +57,5 @@ const Login = () => {
   )
 }
 
-export default Login
+export default VerifyWorldId
+

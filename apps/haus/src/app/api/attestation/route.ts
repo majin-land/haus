@@ -49,7 +49,7 @@ export async function POST(request: Request) {
       schema: SCHEMA_UID as string,
       data: {
         recipient: recipient || '0x0000000000000000000000000000000000000000',
-        expirationTime: 0,
+        expirationTime: BigInt(0),
         revocable: true, // Be aware that if your schema is not revocable, this MUST be false
         data: encodedData,
       },
@@ -57,7 +57,9 @@ export async function POST(request: Request) {
     const newAttestationUID = await tx.wait()
     console.log('New attestation UID:', newAttestationUID)
 
-    return NextResponse.json(`New attestation UID: ${newAttestationUID}`)
+    return NextResponse.json({
+      attestationUID: newAttestationUID,
+    })
   } catch (error) {
     console.error('Error handling POST request', error)
     return NextResponse.json({ message: 'Something went wrong' }, { status: 500 })
