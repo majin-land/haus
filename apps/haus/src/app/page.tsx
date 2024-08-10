@@ -7,7 +7,7 @@ import Hero from '@/components/hero'
 import Event from '@/components/event'
 import Footer from '@/components/footer'
 
-import { EVENTS } from '@/config'
+import { EVENTS } from '@/config/events'
 
 export default function Home() {
   return (

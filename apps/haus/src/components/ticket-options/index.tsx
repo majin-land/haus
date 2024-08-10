@@ -22,6 +22,7 @@ import {
 import { useParams, useRouter } from 'next/navigation'
 import { getEventById, IEvent, Ticket } from '@/utils/helper'
 import { TicketContext } from '@/store/ticket'
+import Image from 'next/image'
 
 const EventDetails = ({ event }: { event: IEvent | undefined }) => {
   const router = useRouter()
@@ -39,7 +40,17 @@ const EventDetails = ({ event }: { event: IEvent | undefined }) => {
         </IconButton>
         <Typography variant="h5">Ticket Options</Typography>
       </Stack>
-      <Stack spacing={1}>
+      <Stack
+        gap={4}
+        direction="row"
+        alignItems="start"
+      >
+        <Image
+          src={event?.image || ''}
+          alt={event?.name || ''}
+          width={400}
+          height={200}
+        />
         <Stack spacing={1}>
           <Typography variant="h6">{event?.name}</Typography>
           <Stack
@@ -135,8 +146,9 @@ const Footer = ({
   return (
     <Box
       component="footer"
-      sx={{ backgroundColor: '#7F7DF3', p: '10px', mt: 'auto' }}
+      sx={{ p: '10px', mt: 'auto' }}
     >
+      <Divider sx={{ mb: '1rem' }} />
       <Container maxWidth="lg">
         <Stack
           direction="row"
@@ -146,17 +158,13 @@ const Footer = ({
           <Stack
             direction="row"
             alignItems="center"
-            gap={6}
+            gap={4}
           >
-            <Typography
-              variant="subtitle1"
-              color="white"
-            >
-              Total Price :
-            </Typography>
+            <Typography variant="subtitle1">Total Price :</Typography>
             <Typography
               variant="h6"
-              color="white"
+              color="primary"
+              fontWeight="bold"
             >
               {totalPrice} ETH
             </Typography>
