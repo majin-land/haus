@@ -141,6 +141,6 @@ export const EVENTS = [
   },
 ]
 
-export const EAS_ADDRESS = process.env.NEXT_PUBLIC_EAS_CONTRACT_ADDRESS || ''
-export const SCHEMA_UID = process.env.NEXT_PUBLIC_SCHEMA_UID || ''
-export const PROVIDER = process.env.NEXT_PUBLIC_EAS_PROVIDER_URL || 'https://sepolia.optimism.io'
+export const EAS_ADDRESS = process.env.EAS_CONTRACT_ADDRESS
+export const SCHEMA_UID = process.env.SCHEMA_UID
+export const PROVIDER = process.env.EAS_PROVIDER_URL || 'https://sepolia.optimism.io'
