@@ -63,7 +63,7 @@ export async function POST(request: Request) {
     console.log('New attestation UID:', newAttestationUID)
 
     return NextResponse.json({
-      attestationUID: newAttestationUID,
+      attestation_id: newAttestationUID,
     })
   } catch (error) {
     console.error('Error handling POST request', error)

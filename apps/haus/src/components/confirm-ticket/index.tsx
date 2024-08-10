@@ -1,5 +1,10 @@
 'use client'
-import { Box, Button, Container, Divider, IconButton, Stack, Typography } from '@mui/material'
+import Typography from '@mui/material/Typography'
+import Stack from '@mui/material/Stack'
+import IconButton from '@mui/material/IconButton'
+import Divider from '@mui/material/Divider'
+import Container from '@mui/material/Container'
+import Box from '@mui/material/Box'
 import React, { useContext } from 'react'
 import { useParams } from 'next/navigation'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
@@ -7,10 +12,12 @@ import LocationOnIcon from '@mui/icons-material/LocationOn'
 import EventIcon from '@mui/icons-material/Event'
 import { getEventById } from '@/utils/helper'
 import { TicketContext } from '@/store/ticket'
-import { useConnect, useAccount, useEnsName } from 'wagmi'
+// import { useConnect, useAccount, useEnsName } from 'wagmi'
+import { useAccount, useEnsName } from 'wagmi'
 import { useMutation } from '@tanstack/react-query'
 import VerifyWorldId from '../verify-world-id'
 import api from '@/services/api'
+import { useRouter } from 'next/router'
 
 function generateSeatNumber() {
   const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
@@ -23,10 +30,12 @@ function ConfirmTicket({ setStep }: { setStep: (step: number) => void }) {
   const { id } = useParams<{ id: string }>()
   const event = getEventById(id)
   const context = useContext(TicketContext)
-  const { connectors, connect } = useConnect()
-  const { address, connector, isConnected } = useAccount()
+  // const { connectors, connect } = useConnect()
+  // const { address, connector, isConnected } = useAccount()
+  const { address } = useAccount()
   const { data: ensName } = useEnsName({ address })
-  const { mutateAsync: confirmOrder, isLoading } = useMutation({
+  const router = useRouter()
+  const { mutateAsync: confirmOrder } = useMutation({
     mutationFn: (payload: {
       id: string
       eventId: string
@@ -37,19 +46,10 @@ function ConfirmTicket({ setStep }: { setStep: (step: number) => void }) {
       entryFor: number
       recipient: string
     }) => {
-      return api.post<{ attestation_id: string }>(`/attestation/`, {
-        id: '1',
-        eventId: 'E12345',
-        worldProof: payload.worldProof,
-        holderName: 'John Doe',
-        type: 'VIP',
-        seatNumber: 'A1',
-        entryFor: 1,
-        recipient: '0xc6A73FEcBE0a36acF4D87C2d0246d7573466E868',
-      })
+      return api.post<{ attestation_id: string }>(`/attestation/`, payload)
     },
     onSuccess: () => {
-      setStep(1)
+      router.push(`/event/${id}/complate`)
     },
   })
   return (
@@ -134,22 +134,11 @@ function ConfirmTicket({ setStep }: { setStep: (step: number) => void }) {
             direction="row"
             justifyContent="flex-end"
           >
-            <Button
-              sx={{ width: 120 }}
-              onClick={() => {
-                connect({ connector: connectors[0] })
-              }}
-              variant="contained"
-              size="large"
-            >
-              Pay
-            </Button>
             <VerifyWorldId
               label="Pay"
               onSuccess={async (item) => {
                 // console.log('success', item)
-                // connect({ connector: connectors[0] })
-                const { data } = await confirmOrder({
+                console.log({
                   id: event?.id || '',
                   eventId: event?.id || '',
                   worldProof: item.proof,
@@ -159,10 +148,21 @@ function ConfirmTicket({ setStep }: { setStep: (step: number) => void }) {
                   entryFor: 1,
                   recipient: address || '',
                 })
+                // connect({ connector: connectors[0] })
+                const { data } = await confirmOrder({
+                  id: event?.id || '',
+                  eventId: event?.id || '',
+                  worldProof: item.proof,
+                  holderName: ensName || address || '',
+                  type: event?.tickets[0].type || '',
+                  seatNumber: generateSeatNumber(),
+                  entryFor: 1,
+                  recipient: address || '',
+                })
 
-                console.log('data', data)
+                console.log('attestation_id: ', data?.attestation_id)
               }}
-              onError={console.log}
+              onError={console.error}
             />
           </Stack>
         </Stack>
