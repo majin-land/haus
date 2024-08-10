@@ -130,3 +130,12 @@ dist
 .pnp.*
 
 .nx
+
+#Hardhat files
+coverage
+coverage.json
+typechain
+cache
+artifacts
+.openzeppelin
+build
