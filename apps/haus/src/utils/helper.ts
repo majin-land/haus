@@ -1,4 +1,4 @@
-import { EVENTS } from '@/config'
+import { EVENTS } from '@/config/events'
 
 export interface Ticket {
   type: string
@@ -18,8 +18,7 @@ export interface IEvent {
     price: number
     available_tickets: number
   }[]
-  categories: string[]
-  image_url: string
+  image: string
 }
 
 export function getEventById(id: string) {

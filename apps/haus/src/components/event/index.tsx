@@ -8,7 +8,7 @@ import CardContent from '@mui/material/CardContent'
 import Button from '@mui/material/Button'
 import CardActions from '@mui/material/CardActions'
 import { useRouter } from 'next/navigation'
-import { Stack } from '@mui/material'
+import { CardMedia, Stack } from '@mui/material'
 import { useAccount, useConnect } from 'wagmi'
 
 import LocationOnIcon from '@mui/icons-material/LocationOn'
@@ -42,6 +42,12 @@ export default function Event(props: EventProps) {
       md={3}
     >
       <Card sx={{ minWidth: 285 }}>
+        <CardMedia
+          component="img"
+          alt={event.image}
+          sx={{ height: 184 }}
+          image={event.image}
+        />
         <CardContent>
           <Stack spacing={1}>
             <Typography variant="h6">{event.name}</Typography>

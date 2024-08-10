@@ -24,7 +24,7 @@ export default function Hero() {
         textAlign="center"
         pt={15}
       >
-        Exclusive events, priceless moments
+        Crypto & Blockchain Events
       </Typography>
     </Paper>
   )
