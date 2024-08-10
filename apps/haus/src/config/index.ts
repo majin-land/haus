@@ -140,7 +140,3 @@ export const EVENTS = [
     image_url: 'https://example.com/images/berlin-film-festival.jpg',
   },
 ]
-
-export const EAS_ADDRESS = process.env.NEXT_PUBLIC_EAS_CONTRACT_ADDRESS || ''
-export const SCHEMA_UID = process.env.NEXT_PUBLIC_SCHEMA_UID || ''
-export const PROVIDER = process.env.NEXT_PUBLIC_EAS_PROVIDER_URL || 'https://sepolia.optimism.io'
