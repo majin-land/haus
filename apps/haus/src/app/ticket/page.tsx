@@ -25,7 +25,7 @@ function TicketPage() {
     if (address) {
       fetchData()
     }
-  }, [])
+  }, [address])
 
   if (loading) return <>Loading...</>
   return (
