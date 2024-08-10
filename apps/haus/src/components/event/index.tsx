@@ -8,11 +8,12 @@ import CardContent from '@mui/material/CardContent'
 import Button from '@mui/material/Button'
 import CardActions from '@mui/material/CardActions'
 import { useRouter } from 'next/navigation'
-import { CardMedia, Stack } from '@mui/material'
+import { CardMedia, Stack, Tooltip } from '@mui/material'
 import { useAccount, useConnect } from 'wagmi'
 
 import LocationOnIcon from '@mui/icons-material/LocationOn'
 import EventIcon from '@mui/icons-material/Event'
+import PaymentIcon from '@mui/icons-material/Payment'
 import { IEvent, formatPriceRange } from '@/utils/helper'
 
 import { connectorCoinBaseWallet } from '../provider/wagmi'
@@ -50,26 +51,52 @@ export default function Event(props: EventProps) {
         />
         <CardContent>
           <Stack spacing={1}>
-            <Typography variant="h6">{event.name}</Typography>
-            <Typography
-              variant="body2"
-              component="span"
-            >
-              {formatPriceRange(event.tickets)} ETH
-            </Typography>
+            <Tooltip title={event.name}>
+              <Typography
+                fontWeight="bold"
+                variant="body1"
+                sx={{
+                  whiteSpace: 'nowrap',
+                  overflow: 'hidden',
+                  textOverflow: 'ellipsis',
+                }}
+              >
+                {event.name}
+              </Typography>
+            </Tooltip>
             <Stack
               direction="row"
               gap={1}
               alignItems="center"
             >
-              <LocationOnIcon fontSize="small" />
+              <PaymentIcon fontSize="small" />
               <Typography
                 variant="body2"
                 component="span"
               >
-                {event.location}
+                {formatPriceRange(event.tickets)} ETH
               </Typography>
             </Stack>
+            <Tooltip title={event.location}>
+              <Stack
+                direction="row"
+                gap={1}
+                alignItems="center"
+              >
+                <LocationOnIcon fontSize="small" />
+                <Typography
+                  variant="body2"
+                  component="span"
+                  sx={{
+                    whiteSpace: 'nowrap',
+                    overflow: 'hidden',
+                    textOverflow: 'ellipsis',
+                  }}
+                >
+                  {event.location}
+                </Typography>
+              </Stack>
+            </Tooltip>
             <Stack
               direction="row"
               gap={1}
