@@ -1,7 +1,9 @@
 import { NextResponse } from 'next/server'
 import { EAS } from '@ethereum-attestation-service/eas-sdk'
 import { ethers } from 'ethers'
-import { EAS_ADDRESS, PRIVATE_KEY, PROVIDER } from '@/config'
+import { EAS_ADDRESS, PROVIDER } from '@/config'
+
+const PRIVATE_KEY = process.env.WALLET_PRIVATE_KEY
 
 const customStringify = (obj) => {
   return JSON.stringify(obj, (key, value) => (typeof value === 'bigint' ? value.toString() : value))

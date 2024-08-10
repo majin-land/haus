@@ -1,7 +1,9 @@
 import { NextResponse } from 'next/server'
 import { EAS, SchemaEncoder } from '@ethereum-attestation-service/eas-sdk'
 import { ethers } from 'ethers'
-import { EAS_ADDRESS, PRIVATE_KEY, SCHEMA_UID, PROVIDER } from '@/config'
+import { EAS_ADDRESS, SCHEMA_UID, PROVIDER } from '@/config'
+
+const PRIVATE_KEY = process.env.WALLET_PRIVATE_KEY
 
 export async function POST(request: Request) {
   try {
