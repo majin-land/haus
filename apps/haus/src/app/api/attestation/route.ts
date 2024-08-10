@@ -1,25 +1,22 @@
 import { NextResponse } from 'next/server'
 import { EAS, SchemaEncoder } from '@ethereum-attestation-service/eas-sdk'
 import { ethers } from 'ethers'
-import { EAS_ADDRESS, SCHEMA_UID, PROVIDER } from '@/config'
-
-export const PRIVATE_KEY = process.env.WALLET_PRIVATE_KEY
+import { EAS_ADDRESS, PRIVATE_KEY, SCHEMA_UID, PROVIDER } from '@/config'
 
 export async function POST(request: Request) {
   try {
-    if (!PRIVATE_KEY || !EAS_ADDRESS) return
     const body = await request.json()
     const { id, eventId, holderName, type, seatNumber, entryFor, recipient } = body
 
-    if (!id || !eventId || !holderName || !type || !seatNumber || !entryFor) {
+    if (!id || !eventId || !holderName || !type || !seatNumber || !entryFor || !recipient) {
       return NextResponse.json({ message: 'All field are required' }, { status: 400 })
     }
     // Initialize the sdk with the address of the EAS Schema contract address
-    const easInstance = new EAS(EAS_ADDRESS)
+    const easInstance = new EAS(EAS_ADDRESS as string)
 
     // Gets a default provider (in production use something else like infura/alchemy)
     const provider = ethers.getDefaultProvider(PROVIDER)
-    const signer = new ethers.Wallet(PRIVATE_KEY, provider)
+    const signer = new ethers.Wallet(PRIVATE_KEY as string, provider)
 
     // Connects an ethers style provider/signingProvider to perform read/write functions.
     easInstance.connect(signer)
@@ -37,10 +34,10 @@ export async function POST(request: Request) {
       { name: 'entry_for', value: entryFor, type: 'uint8' },
     ])
     const tx = await easInstance.attest({
-      schema: SCHEMA_UID,
+      schema: SCHEMA_UID as string,
       data: {
-        recipient,
-        expirationTime: BigInt(0),
+        recipient: recipient || '0x0000000000000000000000000000000000000000',
+        expirationTime: 0,
         revocable: true, // Be aware that if your schema is not revocable, this MUST be false
         data: encodedData,
       },
