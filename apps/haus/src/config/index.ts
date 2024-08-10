@@ -141,6 +141,7 @@ export const EVENTS = [
   },
 ]
 
-export const EAS_ADDRESS = process.env.EAS_CONTRACT_ADDRESS
 export const SCHEMA_UID = process.env.SCHEMA_UID
 export const PROVIDER = process.env.EAS_PROVIDER_URL || 'https://sepolia.optimism.io'
+export const QUERY_ENDPOINT =
+  process.env.QUERY_ENDPOINT_URL || 'https://optimism-sepolia.easscan.org/graphql'

@@ -1,9 +1,11 @@
-import { NextResponse } from 'next/server'
+import { NextResponse, NextRequest } from 'next/server'
 import { EAS, SchemaEncoder } from '@ethereum-attestation-service/eas-sdk'
 import { ethers } from 'ethers'
-import { EAS_ADDRESS, SCHEMA_UID, PROVIDER } from '@/config'
+import axios from 'axios'
+import { SCHEMA_UID, PROVIDER } from '@/config'
 
 const PRIVATE_KEY = process.env.WALLET_PRIVATE_KEY
+const EAS_ADDRESS = process.env.EAS_CONTRACT_ADDRESS
 
 export async function POST(request: Request) {
   try {
@@ -60,6 +62,54 @@ export async function POST(request: Request) {
     return NextResponse.json(`New attestation UID: ${newAttestationUID}`)
   } catch (error) {
     console.error('Error handling POST request', error)
+    return NextResponse.json({ message: 'Something went wrong' }, { status: 500 })
+  }
+}
+
+const endpoint = 'https://optimism-sepolia.easscan.org/graphql'
+
+export async function GET(request: NextRequest) {
+  const searchParams = request.nextUrl.searchParams
+  const query = `
+    query Attestations($where: AttestationWhereInput, $orderBy: [AttestationOrderByWithRelationInput!]) {
+      attestations(where: $where, orderBy: $orderBy) {
+        attester
+        id
+        recipient
+        schemaId
+        timeCreated
+        decodedDataJson
+      }
+    }
+  `
+
+  try {
+    // schema uid: ?uid=xxxxxxxxxxxxxxxxxxxxxx
+    const uid = searchParams.get('uid')
+
+    if (!uid) {
+      return NextResponse.json({ message: 'Schema UID is required' }, { status: 400 })
+    }
+
+    const response = await axios.post(
+      endpoint,
+      {
+        query,
+        variables: {
+          where: { schemaId: { equals: uid } },
+          orderBy: [{ timeCreated: 'desc' }],
+        },
+      },
+      {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      },
+    )
+
+    return NextResponse.json(response.data)
+  } catch (error) {
+    console.error('Error handling GET request', error)
     return NextResponse.json({ message: 'Something went wrong' }, { status: 500 })
   }
 }
