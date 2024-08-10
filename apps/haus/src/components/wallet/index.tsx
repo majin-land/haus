@@ -10,6 +10,7 @@ import {
 import { Address, Avatar, Name, Identity, EthBalance } from '@coinbase/onchainkit/identity'
 import { color } from '@coinbase/onchainkit/theme'
 import { Box } from '@mui/material'
+import ConfirmationNumberIcon from '@mui/icons-material/ConfirmationNumber'
 
 const WalletComponents = () => {
   return (
@@ -34,6 +35,12 @@ const WalletComponents = () => {
             href="https://wallet.coinbase.com"
           >
             Wallet
+          </WalletDropdownLink>
+          <WalletDropdownLink
+            icon={<ConfirmationNumberIcon />}
+            href="/ticket"
+          >
+            My Ticket
           </WalletDropdownLink>
           <WalletDropdownDisconnect />
         </WalletDropdown>
