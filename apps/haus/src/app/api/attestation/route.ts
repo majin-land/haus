@@ -2,10 +2,13 @@ import { NextResponse, NextRequest } from 'next/server'
 import { EAS, SchemaEncoder } from '@ethereum-attestation-service/eas-sdk'
 import { ethers } from 'ethers'
 import axios from 'axios'
-import { SCHEMA_UID, PROVIDER } from '@/config'
 
 const PRIVATE_KEY = process.env.WALLET_PRIVATE_KEY
 const EAS_ADDRESS = process.env.EAS_CONTRACT_ADDRESS
+const SCHEMA_UID = process.env.SCHEMA_UID
+const PROVIDER = process.env.EAS_PROVIDER_URL || 'https://sepolia.optimism.io'
+const QUERY_ENDPOINT =
+  process.env.QUERY_ENDPOINT_URL || 'https://optimism-sepolia.easscan.org/graphql'
 
 export async function POST(request: Request) {
   try {
@@ -51,7 +54,7 @@ export async function POST(request: Request) {
       schema: SCHEMA_UID as string,
       data: {
         recipient: recipient || '0x0000000000000000000000000000000000000000',
-        expirationTime: 0,
+        expirationTime: BigInt(0),
         revocable: true, // Be aware that if your schema is not revocable, this MUST be false
         data: encodedData,
       },
@@ -65,8 +68,6 @@ export async function POST(request: Request) {
     return NextResponse.json({ message: 'Something went wrong' }, { status: 500 })
   }
 }
-
-const endpoint = 'https://optimism-sepolia.easscan.org/graphql'
 
 export async function GET(request: NextRequest) {
   const searchParams = request.nextUrl.searchParams
@@ -92,7 +93,7 @@ export async function GET(request: NextRequest) {
     }
 
     const response = await axios.post(
-      endpoint,
+      QUERY_ENDPOINT,
       {
         query,
         variables: {

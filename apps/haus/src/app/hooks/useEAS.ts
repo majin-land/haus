@@ -2,10 +2,10 @@
 import { EAS } from '@ethereum-attestation-service/eas-sdk'
 import { ethers } from 'ethers'
 import { useEffect, useState } from 'react'
-import { PROVIDER } from '@/config'
 
 const PRIVATE_KEY = process.env.WALLET_PRIVATE_KEY
 const EAS_ADDRESS = process.env.EAS_CONTRACT_ADDRESS
+const PROVIDER = process.env.EAS_PROVIDER_URL || 'https://sepolia.optimism.io'
 
 export const useEAS = () => {
   const [eas, setEAS] = useState<EAS>()

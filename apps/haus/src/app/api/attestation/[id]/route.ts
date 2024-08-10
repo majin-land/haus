@@ -1,7 +1,8 @@
 import { NextResponse } from 'next/server'
 import axios from 'axios'
 
-const endpoint = 'https://optimism-sepolia.easscan.org/graphql'
+const QUERY_ENDPOINT =
+  process.env.QUERY_ENDPOINT_URL || 'https://optimism-sepolia.easscan.org/graphql'
 
 export async function GET(request: Request, context: { params: { id: string } }) {
   const query = `
@@ -24,7 +25,7 @@ export async function GET(request: Request, context: { params: { id: string } })
     }
 
     const response = await axios.post(
-      endpoint,
+      QUERY_ENDPOINT,
       {
         query,
         variables: { where: { id: attestationUID } },

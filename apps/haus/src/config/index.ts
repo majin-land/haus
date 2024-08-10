@@ -140,8 +140,3 @@ export const EVENTS = [
     image_url: 'https://example.com/images/berlin-film-festival.jpg',
   },
 ]
-
-export const SCHEMA_UID = process.env.SCHEMA_UID
-export const PROVIDER = process.env.EAS_PROVIDER_URL || 'https://sepolia.optimism.io'
-export const QUERY_ENDPOINT =
-  process.env.QUERY_ENDPOINT_URL || 'https://optimism-sepolia.easscan.org/graphql'
