@@ -2,7 +2,7 @@ export const EVENTS = [
   {
     id: 'event-001',
     name: 'Verifiable Summit @ ETH Warsaw 2024',
-    date: 'Sep 4 2024',
+    date: 'Sep 4th 2024',
     time: '2:30 PM - 10:30 PM',
     location: 'National Library, al. Niepodległości 213, Warsaw, Poland',
     description:
@@ -29,7 +29,7 @@ export const EVENTS = [
   {
     id: 'event-002',
     name: 'Wiki Finance Expo Bangkok 2024',
-    date: 'Sep 7 2024',
+    date: 'Sep 7th 2024',
     time: '10:00 AM - 6:00 PM',
     location: 'Bangkok Marriott Marquis Queen’s Park, Bangkok, Thailand',
     description:
@@ -56,7 +56,7 @@ export const EVENTS = [
   {
     id: 'event-003',
     name: 'VC Founders Summit 2024',
-    date: 'Sep 21 2024',
+    date: 'Sep 21st 2024',
     time: '3:00 PM - 10:00 PM',
     location: 'Marina Bay Sands, Singapore',
     description:
@@ -83,7 +83,7 @@ export const EVENTS = [
   {
     id: 'event-004',
     name: 'Web3 Tales: DeFi DeTangled 1.10',
-    date: 'Oct 1 2024',
+    date: 'Oct 1st 2024',
     time: '3:00 PM - 11:00 PM',
     location: 'Lauba People and Art House, Prilaz Baruna Filipovića 23A, 10000, Zagreb, Croatia',
     description:
@@ -110,7 +110,7 @@ export const EVENTS = [
   {
     id: 'event-005',
     name: 'CCA Token Summit 2024',
-    date: 'Oct 3 2024',
+    date: 'Oct 3rd 2024',
     time: '2:00 PM - 11:00 PM',
     location: 'Vaduzer Saal, Vaduz, Liechtenstein',
     description:
@@ -137,7 +137,7 @@ export const EVENTS = [
   {
     id: 'event-006',
     name: 'Future of Bitcoin Conference 2024',
-    date: 'Oct 5 2024',
+    date: 'Oct 5th 2024',
     time: '2:00 PM - 10:00 PM',
     location: 'Handelsbeurs Antwerpen 31, Borzestraat 2000 Antwerpen, Belgium, Antwerp, Belgium',
     description:
@@ -164,7 +164,7 @@ export const EVENTS = [
   {
     id: 'event-007',
     name: 'Florida Beef Summit 2024',
-    date: 'Nov 3 2024',
+    date: 'Nov 3rd 2024',
     time: '8:00 PM - 5:00 AM',
     location: 'Fort De Soto Park, St. Petersburg, USA',
     description:
@@ -191,7 +191,7 @@ export const EVENTS = [
   {
     id: 'event-008',
     name: 'De.Fi World 2024',
-    date: 'Nov 11 2024',
+    date: 'Nov 11th 2024',
     time: '10:00 AM - 6:00 PM',
     location:
       'The Athenee Hotel, a Luxury Collection Hotel, 61 Witthayu Rd, Lumphini, Pathum Wan, Bangkok, Thailand',

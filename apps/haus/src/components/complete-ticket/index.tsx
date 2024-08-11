@@ -2,7 +2,7 @@ import React from 'react'
 import { Box, Link, Typography } from '@mui/material'
 import Image from 'next/image'
 
-const ComplateTicket: React.FC = () => {
+const CompleteTicket: React.FC = () => {
   return (
     <Box
       display="flex"
@@ -49,4 +49,4 @@ const ComplateTicket: React.FC = () => {
   )
 }
 
-export default ComplateTicket
+export default CompleteTicket

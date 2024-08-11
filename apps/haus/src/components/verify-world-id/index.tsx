@@ -58,4 +58,3 @@ const VerifyWorldId = ({
 }
 
 export default VerifyWorldId
-

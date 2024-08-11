@@ -71,6 +71,15 @@ export async function POST(request: Request) {
   }
 }
 
+interface WhereType {
+  schemaId: {
+    equals: string | undefined
+  }
+  recipient?: {
+    equals: string | undefined
+  }
+}
+
 export async function GET(request: NextRequest) {
   const searchParams = request.nextUrl.searchParams
   const query = `
@@ -87,19 +96,24 @@ export async function GET(request: NextRequest) {
   `
 
   try {
-    // schema uid: ?uid=xxxxxxxxxxxxxxxxxxxxxx
-    const uid = searchParams.get('uid')
+    if (!SCHEMA_UID) return
 
-    if (!uid) {
-      return NextResponse.json({ message: 'Schema UID is required' }, { status: 400 })
+    const where: WhereType = {
+      schemaId: {
+        equals: SCHEMA_UID,
+      },
     }
+
+    // schema recipient: ?recipient=xxxxxxxxxxxxxxxxxxxxxx
+    const recipient = searchParams.get('recipient')
+    if (recipient) where.recipient = { equals: searchParams.get('recipient') || undefined }
 
     const response = await axios.post(
       QUERY_ENDPOINT,
       {
         query,
         variables: {
-          where: { schemaId: { equals: uid } },
+          where,
           orderBy: [{ timeCreated: 'desc' }],
         },
       },
