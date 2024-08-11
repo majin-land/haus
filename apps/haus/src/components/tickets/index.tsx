@@ -1,14 +1,11 @@
 'use client'
 import Box from '@mui/material/Box'
-import Card from '@mui/material/Card'
 import Stack from '@mui/material/Stack'
-import CardContent from '@mui/material/CardContent'
-import CardActionArea from '@mui/material/CardActionArea'
 import Container from '@mui/material/Container'
 import Typography from '@mui/material/Typography'
-import EventIcon from '@mui/icons-material/Event'
 import LocationOnIcon from '@mui/icons-material/LocationOn'
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle } from '@mui/material'
+import CalendarTodayIcon from '@mui/icons-material/CalendarToday'
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Grid } from '@mui/material'
 import React from 'react'
 import QRCode from 'react-qr-code'
 
@@ -39,6 +36,15 @@ const DialogTicket = ({ handleClose, open }: { handleClose: () => void; open: bo
   )
 }
 
+const events = [
+  {
+    name: 'Verifiable Summit @ ETH Warsaw 2024',
+    date: 'Sep 4 2024',
+    time: '2:30 PM - 10:30 PM',
+    location: 'National Library, al. Niepodległości 213, Warsaw, Poland',
+  },
+]
+
 function Tickets() {
   const [open, setOpen] = React.useState(false)
 
@@ -51,55 +57,121 @@ function Tickets() {
   }
 
   return (
-    <Box style={{ display: 'flex', flexDirection: 'column', height: 'calc(100vh - 64px)' }}>
-      <Container maxWidth="lg">
-        <Box py={4}>
-          <Typography variant="h5">My Tickets</Typography>
-          <Box py={2}>
-            <Card>
-              <CardActionArea onClick={handleClickOpen}>
-                <CardContent>
-                  <Stack spacing={1}>
-                    <Typography variant="h6">Drive In Senja: Back to the Future</Typography>
-                    <Stack
-                      direction="row"
-                      gap={1}
-                      alignItems="center"
-                    >
-                      <LocationOnIcon fontSize="small" />
-                      <Typography
-                        variant="body1"
-                        component="span"
-                      >
-                        Parkiran Utama Mall @ Alam Sutera
-                      </Typography>
-                    </Stack>
-                    <Stack
-                      direction="row"
-                      gap={1}
-                      alignItems="center"
-                    >
-                      <EventIcon fontSize="small" />
-                      <Typography
-                        variant="body1"
-                        component="span"
-                      >
-                        September 22, 2021 &middot; 20.00 - 21.56 WIB
-                      </Typography>
-                    </Stack>
-                  </Stack>
-                </CardContent>
-              </CardActionArea>
-            </Card>
-          </Box>
-        </Box>
-      </Container>
+    <Container maxWidth="lg">
+      <Typography
+        variant="h4"
+        sx={{
+          pt: 2,
+          mb: 4,
+        }}
+      >
+        My Tickets
+      </Typography>
+
+      <Grid
+        container
+        spacing={4}
+      >
+        {events.map((event, index) => (
+          <Grid
+            item
+            xs={12}
+            md={6}
+            key={index}
+          >
+            <Box sx={styles.containerTicket}>
+              {/* Right Section */}
+              <Box sx={styles.rigthSection}>
+                <Stack
+                  direction="column"
+                  height="100%"
+                  justifyContent="center"
+                >
+                  <Typography variant="h2">23</Typography>
+                  <Typography variant="h6">Seat</Typography>
+                </Stack>
+                <Box sx={styles.roundedTop} />
+                <Box sx={styles.roundedBottom} />
+              </Box>
+
+              {/* Left Section */}
+              <Box sx={styles.leftSection}>
+                <Box>
+                  <Typography
+                    variant="h6"
+                    mb={1}
+                  >
+                    {event.name}
+                  </Typography>
+                  <Box sx={styles.boxDate}>
+                    <CalendarTodayIcon sx={styles.icon} />
+                    <Typography sx={styles.text}>
+                      {event.date} <br /> {event.time}
+                    </Typography>
+                  </Box>
+                  <Box sx={{ display: 'flex' }}>
+                    <LocationOnIcon sx={styles.icon} />
+                    <Typography sx={styles.text}>{event.location}</Typography>
+                  </Box>
+                </Box>
+                <Button
+                  variant="contained"
+                  sx={styles.buttonTicket}
+                  onClick={handleClickOpen}
+                >
+                  Ticket
+                </Button>
+              </Box>
+            </Box>
+          </Grid>
+        ))}
+      </Grid>
       <DialogTicket
         open={open}
         handleClose={handleClose}
       />
-    </Box>
+    </Container>
   )
+}
+
+const styles = {
+  containerTicket: {
+    backgroundColor: '#DADAFB',
+    display: 'flex',
+    p: 3,
+    position: 'relative',
+    height: '100%',
+    borderRadius: '10px',
+  },
+  icon: { fontSize: '20px', color: '#666', mr: 1, mt: 0.5 },
+  text: { color: '#888', letterSpacing: '1px' },
+  leftSection: {
+    width: '75%',
+    pl: 3,
+    borderLeft: '3px dotted #999',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+  },
+  boxDate: { display: 'flex', mb: 1 },
+  buttonTicket: { mt: 2, alignSelf: 'flex-end' },
+  rigthSection: { width: '25%', textAlign: 'center', position: 'relative' },
+  roundedTop: {
+    position: 'absolute',
+    top: '-35px',
+    right: '-16px',
+    p: '16px',
+    backgroundColor: 'white',
+    borderRadius: '50%',
+  },
+  roundedBottom: {
+    position: 'absolute',
+    bottom: '-35px',
+    right: '-16px',
+    p: '16px',
+    backgroundColor: 'white',
+    borderRadius: '50%',
+  },
 }
 
 export default Tickets
