@@ -4,7 +4,7 @@ import { coinbaseWallet } from 'wagmi/connectors'
 
 export const connectorCoinBaseWallet = coinbaseWallet({
   appName: 'Haus',
-  preference: 'smartWalletOnly', // set this to `all` to use EOAs as well
+  preference: 'all', // set this to `all` to use EOAs as well
   version: '4',
 })
 
