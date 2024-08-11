@@ -13,7 +13,7 @@ export const LoadingPage = ({ minHeight }: any) => {
         minHeight: minHeight || '480px',
       }}
     >
-      <CircularProgress />
+      <CircularProgress size={200} />
       <Typography
         variant="caption"
         sx={{ mt: 4 }}

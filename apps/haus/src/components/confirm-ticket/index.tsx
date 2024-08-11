@@ -1,9 +1,11 @@
 'use client'
 
-import React, { useContext } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import Image from 'next/image'
 import { useParams, useRouter } from 'next/navigation'
-import { useAccount, useEnsName } from 'wagmi'
+import { useAccount, useWriteContract, useEnsName } from 'wagmi'
+import { parseEther } from 'viem'
+// import { EAS, SchemaEncoder } from '@ethereum-attestation-service/eas-sdk'
 import Typography from '@mui/material/Typography'
 import Stack from '@mui/material/Stack'
 import IconButton from '@mui/material/IconButton'
@@ -18,7 +20,19 @@ import { useMutation } from '@tanstack/react-query'
 import { getEventById } from '@/utils/helper'
 import { TicketContext } from '@/store/ticket'
 import api from '@/services/api'
+import { abi } from '@/abi/purchase-ticket'
+
 import VerifyWorldId from '../verify-world-id'
+import { LoadingPage } from '../loading-page'
+// import { useEthersSigner } from '@/utils/ethers'
+
+// const chainId = process.env.NEXT_PUBLIC_CHAIN_ID || 11155420
+
+const purchaseAddress = process.env.NEXT_PUBLIC_PURCHASE_TICKET
+// const resolverAddress = process.env.NEXT_PUBLIC_RESOLVER_ADDRESS
+// const EAS_ADDRESS = process.env.NEXT_PUBLIC_EAS_CONTRACT_ADDRESS
+// const SCHEMA_UID = process.env.NEXT_PUBLIC_SCHEMA_TICKET_UID
+// const PROVIDER = process.env.NEXT_PUBLIC_EAS_PROVIDER_URL || 'https://sepolia.optimism.io'
 
 function generateSeatNumber() {
   const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
@@ -31,12 +45,21 @@ function ConfirmTicket({ setStep }: { setStep: (step: number) => void }) {
   const { id } = useParams<{ id: string }>()
   const event = getEventById(id)
   const context = useContext(TicketContext)
+
+  // const signer = useEthersSigner()
   // const { connectors, connect } = useConnect()
   // const { address, connector, isConnected } = useAccount()
+
+  const [payload, setPayload] = useState<any>(null)
+
   const { address } = useAccount()
   const { data: ensName } = useEnsName({ address })
+
+  const { data: hash, writeContract } = useWriteContract()
+
   const router = useRouter()
-  const { mutateAsync: confirmOrder } = useMutation({
+
+  const { mutateAsync: confirmOrder, isPending } = useMutation({
     mutationFn: (payload: {
       id: string
       eventId: string
@@ -53,6 +76,52 @@ function ConfirmTicket({ setStep }: { setStep: (step: number) => void }) {
       router.push(`/event/${id}/complete`)
     },
   })
+
+  const purchaseTicket = async (payload: any) => {
+    try {
+      if (!purchaseAddress) return
+      await writeContract({
+        address: purchaseAddress as '0x${string}',
+        abi,
+        functionName: 'purchase',
+        args: [payload.eventId, payload.seatNumber, payload.type, payload.worldProof],
+        value: parseEther(String(payload.price)),
+      })
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  const generateAttestation = async () => {
+    await confirmOrder(payload)
+    router.push(`/event/${id}/complete`)
+  }
+
+  const triggerFlow = async (item: any) => {
+    const seatNumber = generateSeatNumber()
+    const payload = {
+      id: event?.id || '',
+      eventId: event?.id || '',
+      worldProof: item.proof,
+      holderName: ensName || 'Anonymous',
+      type: event?.tickets[0].type || '',
+      price: event?.tickets[0].price || 0,
+      seatNumber,
+      entryFor: 1,
+      recipient: address || '',
+    }
+    setPayload(payload)
+
+    await purchaseTicket({ ...payload })
+  }
+
+  useEffect(() => {
+    if (!hash) return
+    generateAttestation()
+  }, [hash])
+
+  if (isPending) return <LoadingPage />
+
   return (
     <Box
       py={4}
@@ -154,34 +223,12 @@ function ConfirmTicket({ setStep }: { setStep: (step: number) => void }) {
             <VerifyWorldId
               label="Pay"
               onSuccess={async (item) => {
-                // console.log('success', item)
-                console.log({
-                  id: event?.id || '',
-                  eventId: event?.id || '',
-                  worldProof: item.proof,
-                  holderName: ensName || '',
-                  type: event?.tickets[0].type || '',
-                  seatNumber: generateSeatNumber(),
-                  entryFor: 1,
-                  recipient: address || '',
-                })
-                // connect({ connector: connectors[0] })
-                const { data } = await confirmOrder({
-                  id: event?.id || '',
-                  eventId: event?.id || '',
-                  worldProof: item.proof,
-                  holderName: ensName || 'Anonymous',
-                  type: event?.tickets[0].type || '',
-                  seatNumber: generateSeatNumber(),
-                  entryFor: 1,
-                  recipient: address || '',
-                })
-
-                console.log('attestation_id: ', data?.attestation_id)
+                await triggerFlow(item)
               }}
               onError={console.error}
             />
           </Stack>
+          {hash && <Box>Transaction Hash: {hash}</Box>}
         </Stack>
       </Container>
     </Box>
