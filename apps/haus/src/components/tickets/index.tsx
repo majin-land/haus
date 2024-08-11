@@ -8,6 +8,7 @@ import CalendarTodayIcon from '@mui/icons-material/CalendarToday'
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Grid } from '@mui/material'
 import React from 'react'
 import QRCode from 'react-qr-code'
+import { EVENTS } from '@/config/events'
 
 const DialogTicket = ({ handleClose, open }: { handleClose: () => void; open: boolean }) => {
   return (
@@ -36,17 +37,80 @@ const DialogTicket = ({ handleClose, open }: { handleClose: () => void; open: bo
   )
 }
 
-const events = [
-  {
-    name: 'Verifiable Summit @ ETH Warsaw 2024',
-    date: 'Sep 4 2024',
-    time: '2:30 PM - 10:30 PM',
-    location: 'National Library, al. Niepodległości 213, Warsaw, Poland',
-  },
-]
+const Ticket = ({ attestation, handleClickOpen }: any) => {
+  const { decodedDataJson } = attestation
+  console.log('decodedDataJson', decodedDataJson)
+  const data = JSON.parse(decodedDataJson)
+  const eventId = data.find((v: any) => v.name == 'event_id').value.value
+  const seatNumber = data.find((v: any) => v.name == 'seat_number').value.value
+  const event = EVENTS.find((e: any) => e.id == eventId)
+  return (
+    <Grid
+      item
+      xs={12}
+      md={6}
+      key={attestation.id}
+    >
+      <Box sx={styles.containerTicket}>
+        {/* Right Section */}
+        <Box sx={styles.rigthSection}>
+          <Stack
+            direction="column"
+            height="100%"
+            justifyContent="center"
+          >
+            <Typography variant="h3">{seatNumber}</Typography>
+            <Typography variant="h6">Seat</Typography>
+          </Stack>
+          <Box sx={styles.roundedTop} />
+          <Box sx={styles.roundedBottom} />
+        </Box>
 
-function Tickets() {
+        {/* Left Section */}
+        <Box sx={styles.leftSection}>
+          <Box>
+            <Typography
+              variant="h6"
+              mb={1}
+            >
+              {event ? event.name : '-'}
+            </Typography>
+            <Box sx={styles.boxDate}>
+              <CalendarTodayIcon sx={styles.icon} />
+              {event ? (
+                <Box>
+                  <Box>
+                    <Typography sx={styles.text}>{event.date}</Typography>
+                  </Box>
+                  <Box>
+                    <Typography sx={styles.text}>{event.time}</Typography>
+                  </Box>
+                </Box>
+              ) : null}
+            </Box>
+            <Box sx={{ display: 'flex' }}>
+              <LocationOnIcon sx={styles.icon} />
+              <Typography sx={styles.text}>{event ? event.location : '-'}</Typography>
+            </Box>
+          </Box>
+          <Button
+            variant="contained"
+            sx={styles.buttonTicket}
+            onClick={() => {
+              handleClickOpen(attestation)
+            }}
+          >
+            Ticket
+          </Button>
+        </Box>
+      </Box>
+    </Grid>
+  )
+}
+
+function Tickets({ attestations }: any) {
   const [open, setOpen] = React.useState(false)
+  console.log('attestations', attestations)
 
   const handleClickOpen = () => {
     setOpen(true)
@@ -72,59 +136,14 @@ function Tickets() {
         container
         spacing={4}
       >
-        {events.map((event, index) => (
-          <Grid
-            item
-            xs={12}
-            md={6}
-            key={index}
-          >
-            <Box sx={styles.containerTicket}>
-              {/* Right Section */}
-              <Box sx={styles.rigthSection}>
-                <Stack
-                  direction="column"
-                  height="100%"
-                  justifyContent="center"
-                >
-                  <Typography variant="h2">23</Typography>
-                  <Typography variant="h6">Seat</Typography>
-                </Stack>
-                <Box sx={styles.roundedTop} />
-                <Box sx={styles.roundedBottom} />
-              </Box>
-
-              {/* Left Section */}
-              <Box sx={styles.leftSection}>
-                <Box>
-                  <Typography
-                    variant="h6"
-                    mb={1}
-                  >
-                    {event.name}
-                  </Typography>
-                  <Box sx={styles.boxDate}>
-                    <CalendarTodayIcon sx={styles.icon} />
-                    <Typography sx={styles.text}>
-                      {event.date} <br /> {event.time}
-                    </Typography>
-                  </Box>
-                  <Box sx={{ display: 'flex' }}>
-                    <LocationOnIcon sx={styles.icon} />
-                    <Typography sx={styles.text}>{event.location}</Typography>
-                  </Box>
-                </Box>
-                <Button
-                  variant="contained"
-                  sx={styles.buttonTicket}
-                  onClick={handleClickOpen}
-                >
-                  Ticket
-                </Button>
-              </Box>
-            </Box>
-          </Grid>
-        ))}
+        {attestations &&
+          attestations.map((attestation: any) => (
+            <Ticket
+              key={attestation.id}
+              attestation={attestation}
+              handleClickOpen={handleClickOpen}
+            />
+          ))}
       </Grid>
       <DialogTicket
         open={open}
@@ -144,7 +163,7 @@ const styles = {
     borderRadius: '10px',
   },
   icon: { fontSize: '20px', color: '#666', mr: 1, mt: 0.5 },
-  text: { color: '#888', letterSpacing: '1px' },
+  text: { color: '#444', letterSpacing: '1px' },
   leftSection: {
     width: '75%',
     pl: 3,

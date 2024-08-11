@@ -1,24 +1,24 @@
 'use client'
+
+import React, { useContext } from 'react'
+import Image from 'next/image'
+import { useParams, useRouter } from 'next/navigation'
+import { useAccount, useEnsName } from 'wagmi'
 import Typography from '@mui/material/Typography'
 import Stack from '@mui/material/Stack'
 import IconButton from '@mui/material/IconButton'
 import Divider from '@mui/material/Divider'
 import Container from '@mui/material/Container'
 import Box from '@mui/material/Box'
-import React, { useContext } from 'react'
-import Image from 'next/image'
-import { useParams } from 'next/navigation'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 import LocationOnIcon from '@mui/icons-material/LocationOn'
 import EventIcon from '@mui/icons-material/Event'
+import { useMutation } from '@tanstack/react-query'
+
 import { getEventById } from '@/utils/helper'
 import { TicketContext } from '@/store/ticket'
-// import { useConnect, useAccount, useEnsName } from 'wagmi'
-import { useAccount, useEnsName } from 'wagmi'
-import { useMutation } from '@tanstack/react-query'
-import VerifyWorldId from '../verify-world-id'
 import api from '@/services/api'
-import { useRouter } from 'next/router'
+import VerifyWorldId from '../verify-world-id'
 
 function generateSeatNumber() {
   const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
@@ -50,7 +50,7 @@ function ConfirmTicket({ setStep }: { setStep: (step: number) => void }) {
       return api.post<{ attestation_id: string }>(`/attestation/`, payload)
     },
     onSuccess: () => {
-      router.push(`/event/${id}/complate`)
+      router.push(`/event/${id}/complete`)
     },
   })
   return (

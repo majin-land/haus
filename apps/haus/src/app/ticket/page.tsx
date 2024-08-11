@@ -1,12 +1,14 @@
 'use client'
 import { useEffect, useState } from 'react'
 import { useAccount } from 'wagmi'
+
 import Tickets from '@/components/tickets'
+import { LoadingPage } from '@/components/loading-page'
 
 function TicketPage() {
   const { address } = useAccount()
-  const [data, setData] = useState(null)
-  const [loading, setLoading] = useState(false)
+  const [data, setData] = useState<any>(null)
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     async function fetchData() {
@@ -27,11 +29,11 @@ function TicketPage() {
     }
   }, [address])
 
-  if (loading) return <>Loading...</>
+  if (loading) return <LoadingPage />
+
   return (
     <>
-      <Tickets />
-      <pre>{JSON.stringify(data, null, 2)}</pre>
+      <Tickets attestations={data ? data.data.attestations : []} />
     </>
   )
 }
