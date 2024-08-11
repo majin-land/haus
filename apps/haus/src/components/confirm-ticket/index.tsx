@@ -1,20 +1,58 @@
 'use client'
-import { Box, Button, Container, Divider, IconButton, Stack, Typography } from '@mui/material'
+import Typography from '@mui/material/Typography'
+import Stack from '@mui/material/Stack'
+import IconButton from '@mui/material/IconButton'
+import Divider from '@mui/material/Divider'
+import Container from '@mui/material/Container'
+import Box from '@mui/material/Box'
 import React, { useContext } from 'react'
-import { useParams, useRouter } from 'next/navigation'
+import Image from 'next/image'
+import { useParams } from 'next/navigation'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 import LocationOnIcon from '@mui/icons-material/LocationOn'
 import EventIcon from '@mui/icons-material/Event'
 import { getEventById } from '@/utils/helper'
 import { TicketContext } from '@/store/ticket'
-import Image from 'next/image'
+// import { useConnect, useAccount, useEnsName } from 'wagmi'
+import { useAccount, useEnsName } from 'wagmi'
+import { useMutation } from '@tanstack/react-query'
+import VerifyWorldId from '../verify-world-id'
+import api from '@/services/api'
+import { useRouter } from 'next/router'
+
+function generateSeatNumber() {
+  const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+  const letter = letters[Math.floor(Math.random() * letters.length)]
+  const number = ('000' + Math.floor(Math.random() * 1000)).slice(-3)
+  return letter + number
+}
 
 function ConfirmTicket({ setStep }: { setStep: (step: number) => void }) {
   const { id } = useParams<{ id: string }>()
   const event = getEventById(id)
-  const router = useRouter()
   const context = useContext(TicketContext)
-
+  // const { connectors, connect } = useConnect()
+  // const { address, connector, isConnected } = useAccount()
+  const { address } = useAccount()
+  const { data: ensName } = useEnsName({ address })
+  const router = useRouter()
+  const { mutateAsync: confirmOrder } = useMutation({
+    mutationFn: (payload: {
+      id: string
+      eventId: string
+      worldProof: string
+      holderName: string
+      type: string
+      seatNumber: string
+      entryFor: number
+      recipient: string
+    }) => {
+      return api.post<{ attestation_id: string }>(`/attestation/`, payload)
+    },
+    onSuccess: () => {
+      router.push(`/event/${id}/complate`)
+    },
+  })
   return (
     <Box
       py={4}
@@ -113,14 +151,36 @@ function ConfirmTicket({ setStep }: { setStep: (step: number) => void }) {
             direction="row"
             justifyContent="flex-end"
           >
-            <Button
-              sx={{ width: 120 }}
-              onClick={() => router.push(`/event/${id}/complate`)}
-              variant="contained"
-              size="large"
-            >
-              Pay
-            </Button>
+            <VerifyWorldId
+              label="Pay"
+              onSuccess={async (item) => {
+                // console.log('success', item)
+                console.log({
+                  id: event?.id || '',
+                  eventId: event?.id || '',
+                  worldProof: item.proof,
+                  holderName: ensName || '',
+                  type: event?.tickets[0].type || '',
+                  seatNumber: generateSeatNumber(),
+                  entryFor: 1,
+                  recipient: address || '',
+                })
+                // connect({ connector: connectors[0] })
+                const { data } = await confirmOrder({
+                  id: event?.id || '',
+                  eventId: event?.id || '',
+                  worldProof: item.proof,
+                  holderName: ensName || address || '',
+                  type: event?.tickets[0].type || '',
+                  seatNumber: generateSeatNumber(),
+                  entryFor: 1,
+                  recipient: address || '',
+                })
+
+                console.log('attestation_id: ', data?.attestation_id)
+              }}
+              onError={console.error}
+            />
           </Stack>
         </Stack>
       </Container>

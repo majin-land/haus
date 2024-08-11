@@ -62,7 +62,9 @@ export async function POST(request: Request) {
     const newAttestationUID = await tx.wait()
     console.log('New attestation UID:', newAttestationUID)
 
-    return NextResponse.json(`New attestation UID: ${newAttestationUID}`)
+    return NextResponse.json({
+      attestation_id: newAttestationUID,
+    })
   } catch (error) {
     console.error('Error handling POST request', error)
     return NextResponse.json({ message: 'Something went wrong' }, { status: 500 })
