@@ -14,19 +14,44 @@ import {
   DialogTitle,
   Grid,
 } from '@mui/material'
-import React, { useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
+import { useAccount, useSignMessage } from 'wagmi'
 import QRCode from 'react-qr-code'
 import { EVENTS } from '@/config/events'
+import * as animationData from './success.json'
+import Lottie from './lottie'
 
-const DialogTicket = ({ handleClose, selected }: { handleClose: () => void; selected: any }) => {
+const DialogTicket = ({
+  handleClose,
+  selected,
+  signature,
+}: {
+  handleClose: () => void
+  selected: any
+  signature: any
+}) => {
+  const { address } = useAccount()
   const [loading, setLoading] = useState(false)
   const [data, setData] = useState<any>(null)
 
+  const url = useMemo(() => {
+    if (!selected || !signature) return ''
+    return (
+      `http://localhost:3000/api/attestation/${selected.attestation.id}/redeem?` +
+      new URLSearchParams({
+        recipient: address as string,
+        signature: signature,
+      }).toString()
+    )
+  }, [selected, signature])
+
+  console.log('url', url)
+
   const handleScan = async () => {
-    if (!selected || !selected.attestation) return
+    if (!selected || !selected.attestation || !address) return
     try {
       setLoading(true)
-      const response = await fetch(`/api/attestation/${selected.attestation.id}`)
+      const response = await fetch(url)
       const result = await response.json()
       setData(result)
       console.log(result)
@@ -37,10 +62,55 @@ const DialogTicket = ({ handleClose, selected }: { handleClose: () => void; sele
     }
   }
 
+  const onClose = () => {
+    setData(null)
+    handleClose()
+  }
+
+  const DisplayContent = () => {
+    if (data) {
+      return (
+        <Box sx={{ width: '320px' }}>
+          <Lottie
+            data={animationData}
+            play={true}
+          />
+        </Box>
+      )
+    }
+
+    if (selected && selected.attestation) {
+      return (
+        <>
+          {loading ? (
+            <Box
+              sx={{
+                display: 'flex',
+                width: '320px',
+                height: '320px',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
+            >
+              <CircularProgress size={200} />
+            </Box>
+          ) : (
+            <QRCode
+              onClick={handleScan}
+              value={url}
+            />
+          )}
+        </>
+      )
+    }
+
+    return null
+  }
+
   return (
     <Dialog
-      open={!!selected}
-      onClose={handleClose}
+      open={!!selected && !!signature}
+      onClose={onClose}
     >
       <DialogTitle>{selected && selected.event ? selected.event.name : '-'}</DialogTitle>
       <DialogContent>
@@ -48,23 +118,12 @@ const DialogTicket = ({ handleClose, selected }: { handleClose: () => void; sele
           alignItems="center"
           spacing={1}
         >
-          {selected && selected.attestation && (
-            <>
-              {loading ? (
-                <CircularProgress />
-              ) : (
-                <QRCode
-                  value={`http://localhost:3000/api/attestation/${selected.attestation.id}`}
-                />
-              )}
-              <Button onClick={handleScan}>Scan</Button>
-            </>
-          )}
+          <DisplayContent />
         </Stack>
       </DialogContent>
       <DialogActions>
         <Button
-          onClick={handleClose}
+          onClick={onClose}
           autoFocus
         >
           Close
@@ -76,7 +135,6 @@ const DialogTicket = ({ handleClose, selected }: { handleClose: () => void; sele
 
 const Ticket = ({ attestation, handleClickOpen }: any) => {
   const { decodedDataJson } = attestation
-  console.log('decodedDataJson', decodedDataJson)
   const data = JSON.parse(decodedDataJson)
   const eventId = data.find((v: any) => v.name == 'event_id').value.value
   const seatNumber = data.find((v: any) => v.name == 'seat_number').value.value
@@ -147,15 +205,23 @@ const Ticket = ({ attestation, handleClickOpen }: any) => {
 
 function Tickets({ attestations }: any) {
   const [selected, setSelected] = React.useState(null)
-  console.log('attestations', attestations)
+  const [signature, setSignature] = React.useState<any>(null)
+  const { data: signMessageData, signMessage } = useSignMessage()
 
-  const handleClickOpen = (attestation: any) => {
-    setSelected(attestation)
+  const handleClickOpen = async (data: any) => {
+    signMessage({ message: data.attestation.id })
+    setSignature(null)
+    setSelected(data)
   }
 
   const handleClose = () => {
     setSelected(null)
   }
+
+  useEffect(() => {
+    if (!signMessageData) setSignature(null)
+    setSignature(signMessageData)
+  }, [signMessageData])
 
   return (
     <Container maxWidth="lg">
@@ -184,6 +250,7 @@ function Tickets({ attestations }: any) {
       </Grid>
       <DialogTicket
         selected={selected}
+        signature={signature}
         handleClose={handleClose}
       />
     </Container>

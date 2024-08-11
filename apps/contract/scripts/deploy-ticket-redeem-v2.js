@@ -12,10 +12,10 @@ async function main() {
 
   console.log('deployer', deployer)
 
-  const RedeemResolver = await ethers.getContractFactory('RedeemResolver')
-  const redeemResolver = await RedeemResolver.deploy('0x4200000000000000000000000000000000000021')
+  const RedeemResolverV2 = await ethers.getContractFactory('RedeemResolverV2')
+  const redeemResolverV2 = await RedeemResolverV2.deploy('0x4200000000000000000000000000000000000021', '0xcDbFCE45c57b31Dc8B196aB58F74E2b8e478fc7e')
 
-  console.log('RedeemResolver details:', redeemResolver)
+  console.log('RedeemResolverV2 details:', redeemResolverV2)
 }
 
 // We recommend this pattern to be able to use async/await everywhere

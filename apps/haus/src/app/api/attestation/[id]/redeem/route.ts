@@ -1,4 +1,4 @@
-import { NextResponse } from 'next/server'
+import { NextRequest, NextResponse } from 'next/server'
 import { EAS, SchemaEncoder } from '@ethereum-attestation-service/eas-sdk'
 import { ethers } from 'ethers'
 
@@ -7,12 +7,13 @@ const EAS_ADDRESS = process.env.EAS_CONTRACT_ADDRESS
 const REDEEM_TICKET_SCHEMA_UID = process.env.REDEEM_TICKET_SCHEMA_UID
 const PROVIDER = process.env.EAS_PROVIDER_URL || 'https://sepolia.optimism.io'
 
-export async function POST(request: Request) {
+export async function GET(request: NextRequest, context: { params: { id: string } }) {
   try {
-    const body = await request.json()
-    const { attestation_id, redeemed_at, recipient } = body
+    const attestationUID = context.params.id
+    const searchParams = request.nextUrl.searchParams
+    const recipient = searchParams.get('recipient')
 
-    if (!attestation_id || !redeemed_at || !recipient) {
+    if (!attestationUID || !recipient) {
       return NextResponse.json({ message: 'All field are required' }, { status: 400 })
     }
     // Initialize the sdk with the address of the EAS Schema contract address
@@ -28,14 +29,14 @@ export async function POST(request: Request) {
     // Initialize SchemaEncoder with the schema string
     const schemaEncoder = new SchemaEncoder('bytes32 attestation_id,string redeemed_at')
     const encodedData = schemaEncoder.encodeData([
-      { name: 'attestation_id', value: attestation_id, type: 'bytes32' },
-      { name: 'redeemed_at', value: redeemed_at, type: 'string' },
+      { name: 'attestation_id', value: attestationUID, type: 'bytes32' },
+      { name: 'redeemed_at', value: new Date().toString(), type: 'string' },
     ])
     const tx = await easInstance.attest({
       schema: REDEEM_TICKET_SCHEMA_UID as string,
       data: {
-        recipient: recipient || '0x0000000000000000000000000000000000000000',
-        expirationTime: BigInt(0),
+        recipient: recipient,
+        expirationTime: 0n,
         revocable: true, // Be aware that if your schema is not revocable, this MUST be false
         data: encodedData,
       },

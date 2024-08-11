@@ -37,5 +37,5 @@ export function formatPriceRange(tickets: Ticket[]): string {
   const maxPrice = tickets[tickets.length - 1]?.price ?? 0
 
   // Format the price range
-  return `${minPrice.toFixed(2)} - ${maxPrice.toFixed(2)}`
+  return `${minPrice.toFixed(4)} - ${maxPrice.toFixed(4)}`
 }
