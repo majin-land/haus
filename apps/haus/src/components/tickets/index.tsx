@@ -5,24 +5,61 @@ import Container from '@mui/material/Container'
 import Typography from '@mui/material/Typography'
 import LocationOnIcon from '@mui/icons-material/LocationOn'
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday'
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Grid } from '@mui/material'
-import React from 'react'
+import {
+  Button,
+  CircularProgress,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  Grid,
+} from '@mui/material'
+import React, { useState } from 'react'
 import QRCode from 'react-qr-code'
 import { EVENTS } from '@/config/events'
 
-const DialogTicket = ({ handleClose, open }: { handleClose: () => void; open: boolean }) => {
+const DialogTicket = ({ handleClose, selected }: { handleClose: () => void; selected: any }) => {
+  const [loading, setLoading] = useState(false)
+  const [data, setData] = useState<any>(null)
+
+  const handleScan = async () => {
+    if (!selected || !selected.attestation) return
+    try {
+      setLoading(true)
+      const response = await fetch(`/api/attestation/${selected.attestation.id}`)
+      const result = await response.json()
+      setData(result)
+      console.log(result)
+    } catch (error) {
+      console.error('Error verifying attestations:', error)
+    } finally {
+      setLoading(false)
+    }
+  }
+
   return (
     <Dialog
-      open={open}
+      open={!!selected}
       onClose={handleClose}
     >
-      <DialogTitle>Drive In Senja: Back to the Future</DialogTitle>
+      <DialogTitle>{selected && selected.event ? selected.event.name : '-'}</DialogTitle>
       <DialogContent>
         <Stack
           alignItems="center"
           spacing={1}
         >
-          <QRCode value="hey" />
+          {selected && selected.attestation && (
+            <>
+              {loading ? (
+                <CircularProgress />
+              ) : (
+                <QRCode
+                  value={`http://localhost:3000/api/attestation/${selected.attestation.id}`}
+                />
+              )}
+              <Button onClick={handleScan}>Scan</Button>
+            </>
+          )}
         </Stack>
       </DialogContent>
       <DialogActions>
@@ -97,7 +134,7 @@ const Ticket = ({ attestation, handleClickOpen }: any) => {
             variant="contained"
             sx={styles.buttonTicket}
             onClick={() => {
-              handleClickOpen(attestation)
+              handleClickOpen({ attestation, event })
             }}
           >
             Ticket
@@ -109,15 +146,15 @@ const Ticket = ({ attestation, handleClickOpen }: any) => {
 }
 
 function Tickets({ attestations }: any) {
-  const [open, setOpen] = React.useState(false)
+  const [selected, setSelected] = React.useState(null)
   console.log('attestations', attestations)
 
-  const handleClickOpen = () => {
-    setOpen(true)
+  const handleClickOpen = (attestation: any) => {
+    setSelected(attestation)
   }
 
   const handleClose = () => {
-    setOpen(false)
+    setSelected(null)
   }
 
   return (
@@ -146,7 +183,7 @@ function Tickets({ attestations }: any) {
           ))}
       </Grid>
       <DialogTicket
-        open={open}
+        selected={selected}
         handleClose={handleClose}
       />
     </Container>

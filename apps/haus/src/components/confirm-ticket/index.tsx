@@ -170,7 +170,7 @@ function ConfirmTicket({ setStep }: { setStep: (step: number) => void }) {
                   id: event?.id || '',
                   eventId: event?.id || '',
                   worldProof: item.proof,
-                  holderName: ensName || address || '',
+                  holderName: ensName || 'Anonymous',
                   type: event?.tickets[0].type || '',
                   seatNumber: generateSeatNumber(),
                   entryFor: 1,
