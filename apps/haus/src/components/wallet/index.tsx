@@ -16,7 +16,7 @@ const WalletComponents = () => {
   return (
     <Box sx={{ width: '100%', display: 'flex', justifyContent: 'flex-end' }}>
       <Wallet>
-        <ConnectWallet>
+        <ConnectWallet className="rounded">
           <Avatar />
           <Name />
         </ConnectWallet>

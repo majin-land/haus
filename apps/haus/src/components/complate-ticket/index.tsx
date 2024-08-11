@@ -1,8 +1,6 @@
 import React from 'react'
-import Link from 'next/link'
-import { Box, Typography, Grid } from '@mui/material'
-import EmailIcon from '@mui/icons-material/Email'
-import PhoneIcon from '@mui/icons-material/Phone'
+import { Box, Link, Typography } from '@mui/material'
+import Image from 'next/image'
 
 const ComplateTicket: React.FC = () => {
   return (
@@ -32,9 +30,11 @@ const ComplateTicket: React.FC = () => {
         </Typography>
       </Box>
 
-      <img
+      <Image
         src="/success.png"
-        alt="Completed Illustration"
+        alt="Successful Ticket"
+        width={400}
+        height={400}
         style={{ marginBottom: '24px' }}
       />
 
@@ -43,53 +43,8 @@ const ComplateTicket: React.FC = () => {
         component="p"
         gutterBottom
       >
-        Check your ticket <Link href="#">here</Link>
+        Check your ticket <Link href="/ticket">here</Link>
       </Typography>
-
-      <Typography
-        variant="body1"
-        component="p"
-        gutterBottom
-      >
-        Having trouble receiving the tickets?
-      </Typography>
-
-      <Grid
-        container
-        spacing={2}
-        justifyContent="center"
-      >
-        <Grid item>
-          <Box
-            display="flex"
-            alignItems="center"
-          >
-            <PhoneIcon color="primary" />
-            <Typography
-              variant="body1"
-              component="span"
-              marginLeft="8px"
-            >
-              +62 21 1234 9876
-            </Typography>
-          </Box>
-        </Grid>
-        <Grid item>
-          <Box
-            display="flex"
-            alignItems="center"
-          >
-            <EmailIcon color="primary" />
-            <Typography
-              variant="body1"
-              component="span"
-              marginLeft="8px"
-            >
-              haus@team.com
-            </Typography>
-          </Box>
-        </Grid>
-      </Grid>
     </Box>
   )
 }

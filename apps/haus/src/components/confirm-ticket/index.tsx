@@ -7,6 +7,7 @@ import LocationOnIcon from '@mui/icons-material/LocationOn'
 import EventIcon from '@mui/icons-material/Event'
 import { getEventById } from '@/utils/helper'
 import { TicketContext } from '@/store/ticket'
+import Image from 'next/image'
 
 function ConfirmTicket({ setStep }: { setStep: (step: number) => void }) {
   const { id } = useParams<{ id: string }>()
@@ -35,35 +36,51 @@ function ConfirmTicket({ setStep }: { setStep: (step: number) => void }) {
           <Typography variant="h6">Event Details</Typography>
           <Stack gap={2}>
             <Stack
-              direction="column"
-              gap={1}
+              direction="row"
+              gap={2}
             >
-              <Typography variant="body1">{event?.name}</Typography>
+              <Image
+                src={event?.image || ''}
+                alt={event?.name || ''}
+                width={163}
+                height={85}
+              />
               <Stack
-                direction="row"
+                direction="column"
                 gap={1}
-                alignItems="center"
               >
-                <LocationOnIcon fontSize="small" />
                 <Typography
+                  fontWeight="bold"
                   variant="body1"
-                  component="span"
                 >
-                  {event?.location}
+                  {event?.name}
                 </Typography>
-              </Stack>
-              <Stack
-                direction="row"
-                gap={1}
-                alignItems="center"
-              >
-                <EventIcon fontSize="small" />
-                <Typography
-                  variant="body1"
-                  component="span"
+                <Stack
+                  direction="row"
+                  gap={1}
+                  alignItems="center"
                 >
-                  {event?.date} &middot; {event?.time}
-                </Typography>
+                  <LocationOnIcon fontSize="small" />
+                  <Typography
+                    variant="body1"
+                    component="span"
+                  >
+                    {event?.location}
+                  </Typography>
+                </Stack>
+                <Stack
+                  direction="row"
+                  gap={1}
+                  alignItems="center"
+                >
+                  <EventIcon fontSize="small" />
+                  <Typography
+                    variant="body1"
+                    component="span"
+                  >
+                    {event?.date} &middot; {event?.time}
+                  </Typography>
+                </Stack>
               </Stack>
             </Stack>
             <Divider />
