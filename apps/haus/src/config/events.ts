@@ -10,17 +10,17 @@ export const EVENTS = [
     tickets: [
       {
         type: 'VVIP',
-        price: 0.08,
+        price: 0.0008,
         available_tickets: 10,
       },
       {
         type: 'VIP',
-        price: 0.06,
+        price: 0.0006,
         available_tickets: 50,
       },
       {
         type: 'General',
-        price: 0.05,
+        price: 0.0005,
         available_tickets: 40,
       },
     ],
@@ -37,17 +37,17 @@ export const EVENTS = [
     tickets: [
       {
         type: 'VVIP',
-        price: 0.03,
+        price: 0.0003,
         available_tickets: 10,
       },
       {
         type: 'VIP',
-        price: 0.02,
+        price: 0.0002,
         available_tickets: 50,
       },
       {
         type: 'General',
-        price: 0.01,
+        price: 0.0001,
         available_tickets: 40,
       },
     ],
@@ -64,17 +64,17 @@ export const EVENTS = [
     tickets: [
       {
         type: 'VVIP',
-        price: 0.04,
+        price: 0.0004,
         available_tickets: 10,
       },
       {
         type: 'VIP',
-        price: 0.03,
+        price: 0.0003,
         available_tickets: 50,
       },
       {
         type: 'General',
-        price: 0.02,
+        price: 0.0002,
         available_tickets: 40,
       },
     ],
@@ -91,17 +91,17 @@ export const EVENTS = [
     tickets: [
       {
         type: 'VVIP',
-        price: 0.09,
+        price: 0.0009,
         available_tickets: 10,
       },
       {
         type: 'VIP',
-        price: 0.08,
+        price: 0.0008,
         available_tickets: 50,
       },
       {
         type: 'General',
-        price: 0.07,
+        price: 0.0007,
         available_tickets: 40,
       },
     ],
@@ -118,17 +118,17 @@ export const EVENTS = [
     tickets: [
       {
         type: 'VVIP',
-        price: 0.03,
+        price: 0.0003,
         available_tickets: 10,
       },
       {
         type: 'VIP',
-        price: 0.02,
+        price: 0.0002,
         available_tickets: 50,
       },
       {
         type: 'General',
-        price: 0.01,
+        price: 0.0001,
         available_tickets: 40,
       },
     ],
@@ -145,17 +145,17 @@ export const EVENTS = [
     tickets: [
       {
         type: 'VVIP',
-        price: 0.05,
+        price: 0.0005,
         available_tickets: 10,
       },
       {
         type: 'VIP',
-        price: 0.04,
+        price: 0.0004,
         available_tickets: 50,
       },
       {
         type: 'General',
-        price: 0.03,
+        price: 0.0003,
         available_tickets: 40,
       },
     ],
@@ -172,17 +172,17 @@ export const EVENTS = [
     tickets: [
       {
         type: 'VVIP',
-        price: 0.07,
+        price: 0.0007,
         available_tickets: 10,
       },
       {
         type: 'VIP',
-        price: 0.06,
+        price: 0.0006,
         available_tickets: 50,
       },
       {
         type: 'General',
-        price: 0.05,
+        price: 0.0005,
         available_tickets: 40,
       },
     ],
@@ -200,17 +200,17 @@ export const EVENTS = [
     tickets: [
       {
         type: 'VVIP',
-        price: 0.03,
+        price: 0.0003,
         available_tickets: 10,
       },
       {
         type: 'VIP',
-        price: 0.02,
+        price: 0.0002,
         available_tickets: 50,
       },
       {
         type: 'General',
-        price: 0.01,
+        price: 0.0001,
         available_tickets: 40,
       },
     ],

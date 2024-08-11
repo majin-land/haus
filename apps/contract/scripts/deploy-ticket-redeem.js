@@ -18,8 +18,7 @@ async function main() {
   // if (deployerBalance === '0') return // deployment will fail
 
   const RedeemResolver = await ethers.getContractFactory('RedeemResolver')
-  const redeemResolver = await RedeemResolver.deploy('0x4200000000000000000000000000000000000021')
-  await redeemResolver.deployed()
+  const redeemResolver = await RedeemResolver.deploy('0x4200000000000000000000000000000000000021', '0xcDbFCE45c57b31Dc8B196aB58F74E2b8e478fc7e')
 
   console.log('RedeemResolver deployed to:', redeemResolver.address)
   console.log('RedeemResolver details:', redeemResolver)
